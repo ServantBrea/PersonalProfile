@@ -102,10 +102,8 @@ var Main = (function (_super) {
      * Create a game scene
      */
     p.createGameScene1 = function () {
-        var Page1 = new egret.Sprite();
-        this.addChild(Page1); //页面容器1
         var sky = this.createBitmapByName("sce_jpg");
-        Page1.addChild(sky);
+        this.addChild(sky);
         var stageW = this.stage.stageWidth;
         var stageH = this.stage.stageHeight;
         sky.width = stageW;
@@ -114,9 +112,9 @@ var Main = (function (_super) {
         topMask.graphics.beginFill(0x000000, 0.5);
         topMask.graphics.drawRect(0, 0, stageW, 205);
         topMask.graphics.endFill();
-        Page1.addChild(topMask); //黑框1（标题）
+        this.addChild(topMask); //黑框1（标题）
         var icon1 = this.createBitmapByName("egret_icon_png");
-        Page1.addChild(icon1);
+        this.addChild(icon1);
         icon1.x = 54;
         icon1.y = 12; //标签（白鹭）        
         var colorLabel = new egret.TextField();
@@ -128,9 +126,9 @@ var Main = (function (_super) {
         colorLabel.size = 60;
         colorLabel.x = 172;
         colorLabel.y = 60;
-        Page1.addChild(colorLabel);
+        this.addChild(colorLabel);
         var textfield = new egret.TextField();
-        Page1.addChild(textfield);
+        this.addChild(textfield);
         textfield.alpha = 0;
         textfield.bold = true;
         textfield.width = stageW - 172;
@@ -149,9 +147,9 @@ var Main = (function (_super) {
         Mask1.graphics.drawRect(0, 0, stageW, 172);
         Mask1.graphics.endFill();
         Mask1.y = 238;
-        Page1.addChild(Mask1); //黑框1
+        this.addChild(Mask1); //黑框1
         var icon_music = this.createBitmapByName("umbra_png");
-        Page1.addChild(icon_music);
+        this.addChild(icon_music);
         icon_music.scaleX = 0.3;
         icon_music.scaleY = 0.3;
         icon_music.x = 54;
@@ -162,8 +160,8 @@ var Main = (function (_super) {
             egret.Tween.get(colorLabel1_1).to({ x: 0, y: 260 }, 300, egret.Ease.sineIn);
             egret.Tween.get(colorLabel1_2).to({ x: 82, y: 310 }, 300, egret.Ease.sineIn);
             egret.Tween.get(colorLabel1_3).to({ x: 120, y: 360 }, 300, egret.Ease.sineIn);
+            egret.Tween.get(sky).to({ x: 120, y: 360 }, 300, egret.Ease.sineIn);
         } //缓动
-        //
         var colorLabel1_1 = new egret.TextField();
         colorLabel1_1.textColor = 0x0000ff;
         colorLabel1_1.width = stageW - 172;
@@ -175,7 +173,7 @@ var Main = (function (_super) {
         colorLabel1_1.size = 35;
         colorLabel1_1.x = 1000;
         colorLabel1_1.y = 260;
-        Page1.addChild(colorLabel1_1);
+        this.addChild(colorLabel1_1);
         var colorLabel1_2 = new egret.TextField();
         colorLabel1_2.textColor = 0xffffff;
         colorLabel1_2.width = stageW - 172;
@@ -187,7 +185,7 @@ var Main = (function (_super) {
         colorLabel1_2.size = 30;
         colorLabel1_2.x = 1000;
         colorLabel1_2.y = 310;
-        Page1.addChild(colorLabel1_2);
+        this.addChild(colorLabel1_2);
         var colorLabel1_3 = new egret.TextField();
         colorLabel1_3.textColor = 0xffffff;
         colorLabel1_3.width = stageW - 172;
@@ -199,28 +197,28 @@ var Main = (function (_super) {
         colorLabel1_3.size = 30;
         colorLabel1_3.x = 1000;
         colorLabel1_3.y = 360;
-        Page1.addChild(colorLabel1_3);
+        this.addChild(colorLabel1_3);
         //
         var Mask2 = new egret.Shape();
         Mask2.graphics.beginFill(0x000000, 0.5);
         Mask2.graphics.drawRect(0, 0, stageW, 172);
         Mask2.graphics.endFill();
         Mask2.y = 443;
-        Page1.addChild(Mask2); //黑框2
+        this.addChild(Mask2); //黑框2
         //
         var Mask3 = new egret.Shape();
         Mask3.graphics.beginFill(0x000000, 0.5);
         Mask3.graphics.drawRect(0, 0, stageW, 172);
         Mask3.graphics.endFill();
         Mask3.y = 648;
-        Page1.addChild(Mask3); //黑框3
+        this.addChild(Mask3); //黑框3
         //
         var Mask4 = new egret.Shape();
         Mask4.graphics.beginFill(0x000000, 0.5);
         Mask4.graphics.drawRect(0, 0, stageW, 172);
         Mask4.graphics.endFill();
         Mask4.y = 853;
-        Page1.addChild(Mask4); //黑框4 
+        this.addChild(Mask4); //黑框4 
         var icon_music = this.createBitmapByName("music_png");
         this.addChild(icon_music);
         icon_music.scaleX = 0.25;
@@ -232,10 +230,9 @@ var Main = (function (_super) {
     };
     //
     p.createGameScene2 = function () {
-        var Page2 = new egret.Sprite();
-        this.addChild(Page2); //页面容器2
+        ;
         var sky = this.createBitmapByName("sce1_jpg");
-        Page2.addChild(sky);
+        this.addChild(sky);
         var stageW = this.stage.stageWidth;
         var stageH = this.stage.stageHeight;
         sky.width = stageW;
