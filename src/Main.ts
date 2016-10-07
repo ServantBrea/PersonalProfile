@@ -76,7 +76,6 @@ class Main extends egret.DisplayObjectContainer {
             RES.removeEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
             RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
             RES.removeEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError, this);
-            this.createGameScene2();
             this.createGameScene1();           
         }
     }
@@ -118,8 +117,27 @@ class Main extends egret.DisplayObjectContainer {
      * Create a game scene
      */
     private createGameScene1():void {
+///////////////////////////页面2        
+        var Page2:egret.Sprite = new egret.Sprite();
+        this.addChild(Page2);//页面容器2
+        Page2.touchEnabled = true;
+        Page2.x = -50;
+        Page2.y = -50;
+
+        var sky:egret.Bitmap = this.createBitmapByName("sce1_jpg");
+        Page2.addChild(sky);
+        var stageW:number = this.stage.stageWidth;
+        var stageH:number = this.stage.stageHeight;
+        sky.width = stageW;
+        sky.height = stageH;//全背景
+
+///////////////////////////页面1
+
         var Page1:egret.Sprite = new egret.Sprite();
         this.addChild(Page1);//页面容器1
+        Page1.touchEnabled = true;
+        Page1.x = 50;
+        Page1.y = 50;
 
         var sky:egret.Bitmap = this.createBitmapByName("sce_jpg");
         Page1.addChild(sky);
@@ -128,44 +146,8 @@ class Main extends egret.DisplayObjectContainer {
         sky.width = stageW;
         sky.height = stageH;//全背景
 
-        var topMask = new egret.Shape();
-        topMask.graphics.beginFill(0x000000, 0.5);
-        topMask.graphics.drawRect(0, 0, stageW, 205);
-        topMask.graphics.endFill();
-        Page1.addChild(topMask);//黑框1（标题）
-
-        var icon1:egret.Bitmap = this.createBitmapByName("egret_icon_png");
-        Page1.addChild(icon1);
-        icon1.x = 54;
-        icon1.y = 12;//标签（白鹭）        
-
-        var colorLabel = new egret.TextField();
-        colorLabel.textColor = 0xffffff;
-        colorLabel.width = stageW - 172;
-        colorLabel.textAlign = "center";
-        colorLabel.bold = true;
-        colorLabel.text = "周景城";
-        colorLabel.size = 60;
-        colorLabel.x = 172;
-        colorLabel.y = 60;
-        Page1.addChild(colorLabel);
-
-        var textfield = new egret.TextField();
-        Page1.addChild(textfield);
-        textfield.alpha = 0;
-        textfield.bold = true;
-        textfield.width = stageW - 172;
-        textfield.textAlign = egret.HorizontalAlign.CENTER;
-        textfield.size = 30;
-        textfield.textColor = 0xffffff;
-        textfield.x = 172;
-        textfield.y = 135;
-        this.textfield = textfield;
-
-        //根据name关键字，异步获取一个json配置文件，name属性请参考resources/resource.json配置文件的内容。
-        // Get asynchronously a json configuration file according to name keyword. As for the property of name please refer to the configuration file of resources/resource.json.
-        RES.getResAsync("description_json", this.startAnimation, this)
-//
+        
+        //
         var Mask1 = new egret.Shape();
         Mask1.graphics.beginFill(0x000000, 0.5);
         Mask1.graphics.drawRect(0, 0, stageW, 172);
@@ -182,12 +164,6 @@ class Main extends egret.DisplayObjectContainer {
         icon_music.touchEnabled = true;
         icon_music.addEventListener(egret.TouchEvent.TOUCH_TAP, onScroll, this);
 
-        function onScroll(e: egret.TouchEvent): void {
-              egret.Tween.get( colorLabel1_1 ).to( {x:0,y:260}, 300, egret.Ease.sineIn );
-              egret.Tween.get( colorLabel1_2 ).to( {x:82,y:310}, 300, egret.Ease.sineIn );
-              egret.Tween.get( colorLabel1_3 ).to( {x:120,y:360}, 300, egret.Ease.sineIn );
-        }//缓动
-//
         var colorLabel1_1 = new egret.TextField();
         colorLabel1_1.textColor = 0x0000ff;
         colorLabel1_1.width = stageW - 172;
@@ -226,21 +202,21 @@ class Main extends egret.DisplayObjectContainer {
         colorLabel1_3.x = 1000;
         colorLabel1_3.y = 360;
         Page1.addChild(colorLabel1_3);
-//
+        
         var Mask2 = new egret.Shape();
         Mask2.graphics.beginFill(0x000000, 0.5);
         Mask2.graphics.drawRect(0, 0, stageW, 172);
         Mask2.graphics.endFill();
         Mask2.y = 443;
         Page1.addChild(Mask2);//黑框2
-//
+        
         var Mask3 = new egret.Shape();
         Mask3.graphics.beginFill(0x000000, 0.5);
         Mask3.graphics.drawRect(0, 0, stageW, 172);
         Mask3.graphics.endFill();
         Mask3.y = 648;
         Page1.addChild(Mask3);//黑框3
-//
+        
         var Mask4 = new egret.Shape();
         Mask4.graphics.beginFill(0x000000, 0.5);
         Mask4.graphics.drawRect(0, 0, stageW, 172);
@@ -248,32 +224,79 @@ class Main extends egret.DisplayObjectContainer {
         Mask4.y = 853;
         Page1.addChild(Mask4);//黑框4 
 
+//////////////////////总是在上的页面
+        var Pageall:egret.Sprite = new egret.Sprite();
+        this.addChild(Pageall);//页面容器2
+        
+        var topMask = new egret.Shape();
+        topMask.graphics.beginFill(0x000000, 0.5);
+        topMask.graphics.drawRect(0, 0, stageW, 205);
+        topMask.graphics.endFill();
+        Pageall.addChild(topMask);//黑框1（标题）
+
+        var icon1:egret.Bitmap = this.createBitmapByName("egret_icon_png");
+        Pageall.addChild(icon1);
+        icon1.x = 54;
+        icon1.y = 12;//标签（白鹭）        
+
+        var colorLabel = new egret.TextField();
+        colorLabel.textColor = 0xffffff;
+        colorLabel.width = stageW - 172;
+        colorLabel.textAlign = "center";
+        colorLabel.bold = true;
+        colorLabel.text = "周景城";
+        colorLabel.size = 60;
+        colorLabel.x = 172;
+        colorLabel.y = 60;
+        Pageall.addChild(colorLabel);
+
+        var textfield = new egret.TextField();
+        Pageall.addChild(textfield);
+        textfield.alpha = 0;
+        textfield.bold = true;
+        textfield.width = stageW - 172;
+        textfield.textAlign = egret.HorizontalAlign.CENTER;
+        textfield.size = 30;
+        textfield.textColor = 0xffffff;
+        textfield.x = 172;
+        textfield.y = 135;
+        this.textfield = textfield;
+
+        //根据name关键字，异步获取一个json配置文件，name属性请参考resources/resource.json配置文件的内容。
+        // Get asynchronously a json configuration file according to name keyword. As for the property of name please refer to the configuration file of resources/resource.json.
+        RES.getResAsync("description_json", this.startAnimation, this)
+
         var icon_music:egret.Bitmap = this.createBitmapByName("music_png");
-        this.addChild(icon_music);
+        Pageall.addChild(icon_music);
         icon_music.scaleX = 0.25;
         icon_music.scaleY = 0.25;
         icon_music.x = 530;
         icon_music.y = 1040;//标签(music)按钮
         icon_music.touchEnabled = true;
-        //icon_music.addEventListener(egret.TouchEvent.TOUCH_TAP, onScroll, this);
-    }
-//
-    private createGameScene2():void {
-        var Page2:egret.Sprite = new egret.Sprite();
-        this.addChild(Page2);//页面容器2
+        //icon_music.addEventListener(egret.TouchEvent.TOUCH_TAP, onScroll, this);   
 
-        var sky:egret.Bitmap = this.createBitmapByName("sce1_jpg");
-        Page2.addChild(sky);
-        var stageW:number = this.stage.stageWidth;
-        var stageH:number = this.stage.stageHeight;
-        sky.width = stageW;
-        sky.height = stageH;//全背景
+//////////////////////////////////各类事件
+        Page1.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+            this.setChildIndex(Page1, this.numChildren - 1);
+            this.setChildIndex(Pageall, this.numChildren + 1);
+        }, this );//页面1至上 
+
+        Page2.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+            this.setChildIndex(Page2, this.numChildren - 1);
+            this.setChildIndex(Pageall, this.numChildren + 1);
+        }, this );//页面2至上  
+
+        function onScroll(e: egret.TouchEvent): void {
+              egret.Tween.get( colorLabel1_1 ).to( {x:0,y:260}, 300, egret.Ease.sineIn );
+              egret.Tween.get( colorLabel1_2 ).to( {x:82,y:310}, 300, egret.Ease.sineIn );
+              egret.Tween.get( colorLabel1_3 ).to( {x:120,y:360}, 300, egret.Ease.sineIn );
+        }//umbra的缓动
     }
 //////////////////////////////////后函数
-    /**
-     * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
-     * Create a Bitmap object according to name keyword.As for the property of name please refer to the configuration file of resources/resource.json.
-     */
+
+     //根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
+     //Create a Bitmap object according to name keyword.As for the property of name please refer to the configuration file of resources/resource.json.
+     
    private createBitmapByName(name:string):egret.Bitmap {
         var result = new egret.Bitmap();
         var texture:egret.Texture = RES.getRes(name);
@@ -281,10 +304,10 @@ class Main extends egret.DisplayObjectContainer {
         return result;
     }
 
-    /**
-     * 描述文件加载成功，开始播放动画
-     * Description file loading is successful, start to play the animation
-     */
+    
+     //描述文件加载成功，开始播放动画
+     // Description file loading is successful, start to play the animation
+     
     private startAnimation(result:Array<any>):void {
         var self:any = this;
 
@@ -314,10 +337,10 @@ class Main extends egret.DisplayObjectContainer {
         change();
     }
 
-    /**
-     * 切换描述内容
-     * Switch to described content
-     */
+    
+     // 切换描述内容
+     // Switch to described content
+     
     private changeDescription(textfield:egret.TextField, textFlow:Array<egret.ITextElement>):void {
         textfield.textFlow = textFlow;
     }
