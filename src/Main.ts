@@ -367,7 +367,9 @@ class Page extends egret.DisplayObjectContainer {
                  this.y = evt.stageY - this._distance.y;
                  if( this.y < -450 ){
                      egret.Tween.get( this ).to( {x:0,y:-1136}, 300, egret.Ease.sineIn );
-                     this.setChildIndex(this, this.numChildren - 1);
+                 }
+                 if( this.y > 450 ){
+                     egret.Tween.get( this ).to( {x:0,y:1136}, 300, egret.Ease.sineIn );
                  }
             }            
     }
@@ -375,6 +377,9 @@ class Page extends egret.DisplayObjectContainer {
     public mouseUp(evt:egret.TouchEvent) {
             this._touchStatus = false;
             if( this.y >= -450 ) {
+                egret.Tween.get( this ).to( {x:0,y:0}, 300, egret.Ease.sineIn );
+            }
+            if( this.y <= 450 ) {
                 egret.Tween.get( this ).to( {x:0,y:0}, 300, egret.Ease.sineIn );
             }
             this.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.mouseMove, this);

@@ -308,11 +308,17 @@ var Page = (function (_super) {
             if (this.y < -450) {
                 egret.Tween.get(this).to({ x: 0, y: -1136 }, 300, egret.Ease.sineIn);
             }
+            if (this.y > 450) {
+                egret.Tween.get(this).to({ x: 0, y: 1136 }, 300, egret.Ease.sineIn);
+            }
         }
     };
     p.mouseUp = function (evt) {
         this._touchStatus = false;
         if (this.y >= -450) {
+            egret.Tween.get(this).to({ x: 0, y: 0 }, 300, egret.Ease.sineIn);
+        }
+        if (this.y <= 450) {
             egret.Tween.get(this).to({ x: 0, y: 0 }, 300, egret.Ease.sineIn);
         }
         this.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.mouseMove, this);
