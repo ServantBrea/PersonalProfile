@@ -43,10 +43,9 @@ var Main = (function (_super) {
         RES.addEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.loadConfig("resource/default.res.json", "resource/");
     };
-    /**
-     * 配置文件加载完成,开始预加载preload资源组。
-     * configuration file loading is completed, start to pre-load the preload resource group
-     */
+    ////////////////////////配置
+    // 配置文件加载完成,开始预加载preload资源组。
+    // configuration file loading is completed, start to pre-load the preload resource group
     p.onConfigComplete = function (event) {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
@@ -55,10 +54,8 @@ var Main = (function (_super) {
         RES.addEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError, this);
         RES.loadGroup("preload");
     };
-    /**
-     * preload资源组加载完成
-     * Preload resource group is loaded
-     */
+    // preload资源组加载完成
+    // Preload resource group is loaded
     p.onResourceLoadComplete = function (event) {
         if (event.groupName == "preload") {
             this.stage.removeChild(this.loadingView);
@@ -69,17 +66,13 @@ var Main = (function (_super) {
             this.createGameScene1();
         }
     };
-    /**
-     * 资源组加载出错
-     *  The resource group loading failed
-     */
+    // 资源组加载出错
+    //  The resource group loading failed
     p.onItemLoadError = function (event) {
         console.warn("Url:" + event.resItem.url + " has failed to load");
     };
-    /**
-     * 资源组加载出错
-     *  The resource group loading failed
-     */
+    // 资源组加载出错
+    //  The resource group loading failed
     p.onResourceLoadError = function (event) {
         //TODO
         console.warn("Group:" + event.groupName + " has failed to load");
@@ -87,27 +80,21 @@ var Main = (function (_super) {
         //Ignore the loading failed projects
         this.onResourceLoadComplete(event);
     };
-    /**
-     * preload资源组加载进度
-     * Loading process of preload resource group
-     */
+    // preload资源组加载进度
+    // Loading process of preload resource group
     p.onResourceProgress = function (event) {
         if (event.groupName == "preload") {
             this.loadingView.setProgress(event.itemsLoaded, event.itemsTotal);
         }
     };
-    /**
-     * 创建游戏场景
-     * Create a game scene
-     */
+    ///////////////////////////构建
+    // 创建游戏场景
+    // Create a game scene     
     p.createGameScene1 = function () {
-        var _this = this;
         ///////////////////////////页面2        
-        var Page2 = new egret.Sprite();
+        var Page2 = new Page();
         this.addChild(Page2); //页面容器2
         Page2.touchEnabled = true;
-        Page2.x = -50;
-        Page2.y = -50;
         var sky = this.createBitmapByName("sce1_jpg");
         Page2.addChild(sky);
         var stageW = this.stage.stageWidth;
@@ -115,18 +102,15 @@ var Main = (function (_super) {
         sky.width = stageW;
         sky.height = stageH; //全背景
         ///////////////////////////页面1
-        var Page1 = new egret.Sprite();
+        var Page1 = new Page();
         this.addChild(Page1); //页面容器1
         Page1.touchEnabled = true;
-        Page1.x = 50;
-        Page1.y = 50;
         var sky = this.createBitmapByName("sce_jpg");
         Page1.addChild(sky);
         var stageW = this.stage.stageWidth;
         var stageH = this.stage.stageHeight;
         sky.width = stageW;
         sky.height = stageH; //全背景
-        //
         var Mask1 = new egret.Shape();
         Mask1.graphics.beginFill(0x000000, 0.5);
         Mask1.graphics.drawRect(0, 0, stageW, 172);
@@ -196,13 +180,13 @@ var Main = (function (_super) {
         Mask4.y = 853;
         Page1.addChild(Mask4); //黑框4 
         //////////////////////总是在上的页面
-        var Pageall = new egret.Sprite();
-        this.addChild(Pageall); //页面容器2
+        var Pageall = new egret.DisplayObjectContainer();
+        this.addChild(Pageall); //页面容器最上
         var topMask = new egret.Shape();
         topMask.graphics.beginFill(0x000000, 0.5);
         topMask.graphics.drawRect(0, 0, stageW, 205);
         topMask.graphics.endFill();
-        Pageall.addChild(topMask); //黑框1（标题）
+        Pageall.addChild(topMask); //黑框（标题）
         var icon1 = this.createBitmapByName("egret_icon_png");
         Pageall.addChild(icon1);
         icon1.x = 54;
@@ -240,19 +224,25 @@ var Main = (function (_super) {
         icon_music.touchEnabled = true;
         //icon_music.addEventListener(egret.TouchEvent.TOUCH_TAP, onScroll, this);   
         //////////////////////////////////各类事件
-        Page1.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
-            _this.setChildIndex(Page1, _this.numChildren - 1);
-            _this.setChildIndex(Pageall, _this.numChildren + 1);
-        }, this); //页面1至上 
-        Page2.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
-            _this.setChildIndex(Page2, _this.numChildren - 1);
-            _this.setChildIndex(Pageall, _this.numChildren + 1);
-        }, this); //页面2至上  
+        /*      Page1.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+                    this.setChildIndex(Page1, this.numChildren - 1);
+                    this.setChildIndex(Pageall, this.numChildren + 1);
+                }, this );//页面1至上
+        
+                Page2.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+                    this.setChildIndex(Page2, this.numChildren - 1);
+                    this.setChildIndex(Pageall, this.numChildren + 1);
+                }, this );//页面2至上
+        */
         function onScroll(e) {
             egret.Tween.get(colorLabel1_1).to({ x: 0, y: 260 }, 300, egret.Ease.sineIn);
             egret.Tween.get(colorLabel1_2).to({ x: 82, y: 310 }, 300, egret.Ease.sineIn);
             egret.Tween.get(colorLabel1_3).to({ x: 120, y: 360 }, 300, egret.Ease.sineIn);
         } //umbra的缓动
+        Page1.addEventListener(egret.TouchEvent.TOUCH_BEGIN, Page1.mouseDown, Page1);
+        Page1.addEventListener(egret.TouchEvent.TOUCH_END, Page1.mouseUp, Page1);
+        Page2.addEventListener(egret.TouchEvent.TOUCH_BEGIN, Page2.mouseDown, Page2);
+        Page2.addEventListener(egret.TouchEvent.TOUCH_END, Page2.mouseUp, Page2);
     };
     //////////////////////////////////后函数
     //根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
@@ -297,4 +287,37 @@ var Main = (function (_super) {
     return Main;
 }(egret.DisplayObjectContainer));
 egret.registerClass(Main,'Main');
+/////////////////////////////////Page自定义类
+var Page = (function (_super) {
+    __extends(Page, _super);
+    function Page() {
+        _super.apply(this, arguments);
+        this._touchStatus = false; //当前触摸状态，按下时，值为true
+        this._distance = new egret.Point(); //鼠标点击时，鼠标全局坐标与_bird的位置差
+    }
+    var d = __define,c=Page,p=c.prototype;
+    p.mouseDown = function (evt) {
+        this._touchStatus = true;
+        this._distance.x = evt.stageX - this.x;
+        this._distance.y = evt.stageY - this.y;
+        this.stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.mouseMove, this);
+    };
+    p.mouseMove = function (evt) {
+        if (this._touchStatus) {
+            this.y = evt.stageY - this._distance.y;
+            if (this.y < -450) {
+                egret.Tween.get(this).to({ x: 0, y: -1136 }, 300, egret.Ease.sineIn);
+            }
+        }
+    };
+    p.mouseUp = function (evt) {
+        this._touchStatus = false;
+        if (this.y >= -450) {
+            egret.Tween.get(this).to({ x: 0, y: 0 }, 300, egret.Ease.sineIn);
+        }
+        this.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.mouseMove, this);
+    };
+    return Page;
+}(egret.DisplayObjectContainer));
+egret.registerClass(Page,'Page');
 //# sourceMappingURL=Main.js.map

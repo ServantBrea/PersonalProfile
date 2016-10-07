@@ -29,10 +29,10 @@
 
 class Main extends egret.DisplayObjectContainer {
 
-    /**
-     * 加载进度界面
-     * Process interface loading
-     */
+//////////////////////头    
+     // 加载进度界面
+     // Process interface loading
+     
     private loadingView:LoadingUI;
 
     public constructor() {
@@ -52,10 +52,11 @@ class Main extends egret.DisplayObjectContainer {
         RES.loadConfig("resource/default.res.json", "resource/");
     }
 
-    /**
-     * 配置文件加载完成,开始预加载preload资源组。
-     * configuration file loading is completed, start to pre-load the preload resource group
-     */
+////////////////////////配置
+    
+     // 配置文件加载完成,开始预加载preload资源组。
+     // configuration file loading is completed, start to pre-load the preload resource group
+     
     private onConfigComplete(event:RES.ResourceEvent):void {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
@@ -65,10 +66,10 @@ class Main extends egret.DisplayObjectContainer {
         RES.loadGroup("preload");
     }
 
-    /**
-     * preload资源组加载完成
-     * Preload resource group is loaded
-     */
+    
+     // preload资源组加载完成
+     // Preload resource group is loaded
+     
     private onResourceLoadComplete(event:RES.ResourceEvent):void {
         if (event.groupName == "preload") {
             this.stage.removeChild(this.loadingView);
@@ -80,18 +81,18 @@ class Main extends egret.DisplayObjectContainer {
         }
     }
 
-    /**
-     * 资源组加载出错
-     *  The resource group loading failed
-     */
+    
+     // 资源组加载出错
+     //  The resource group loading failed
+     
     private onItemLoadError(event:RES.ResourceEvent):void {
         console.warn("Url:" + event.resItem.url + " has failed to load");
     }
 
-    /**
-     * 资源组加载出错
-     *  The resource group loading failed
-     */
+    
+     // 资源组加载出错
+     //  The resource group loading failed
+     
     private onResourceLoadError(event:RES.ResourceEvent):void {
         //TODO
         console.warn("Group:" + event.groupName + " has failed to load");
@@ -100,10 +101,10 @@ class Main extends egret.DisplayObjectContainer {
         this.onResourceLoadComplete(event);
     }
 
-    /**
-     * preload资源组加载进度
-     * Loading process of preload resource group
-     */
+    
+     // preload资源组加载进度
+     // Loading process of preload resource group
+     
     private onResourceProgress(event:RES.ResourceEvent):void {
         if (event.groupName == "preload") {
             this.loadingView.setProgress(event.itemsLoaded, event.itemsTotal);
@@ -112,17 +113,17 @@ class Main extends egret.DisplayObjectContainer {
 
     private textfield:egret.TextField;
 
-    /**
-     * 创建游戏场景
-     * Create a game scene
-     */
+     
+
+///////////////////////////构建
+     // 创建游戏场景
+     // Create a game scene     
+     
     private createGameScene1():void {
 ///////////////////////////页面2        
-        var Page2:egret.Sprite = new egret.Sprite();
+        var Page2:Page = new Page();
         this.addChild(Page2);//页面容器2
         Page2.touchEnabled = true;
-        Page2.x = -50;
-        Page2.y = -50;
 
         var sky:egret.Bitmap = this.createBitmapByName("sce1_jpg");
         Page2.addChild(sky);
@@ -132,12 +133,9 @@ class Main extends egret.DisplayObjectContainer {
         sky.height = stageH;//全背景
 
 ///////////////////////////页面1
-
-        var Page1:egret.Sprite = new egret.Sprite();
+        var Page1:Page = new Page();
         this.addChild(Page1);//页面容器1
         Page1.touchEnabled = true;
-        Page1.x = 50;
-        Page1.y = 50;
 
         var sky:egret.Bitmap = this.createBitmapByName("sce_jpg");
         Page1.addChild(sky);
@@ -146,8 +144,6 @@ class Main extends egret.DisplayObjectContainer {
         sky.width = stageW;
         sky.height = stageH;//全背景
 
-        
-        //
         var Mask1 = new egret.Shape();
         Mask1.graphics.beginFill(0x000000, 0.5);
         Mask1.graphics.drawRect(0, 0, stageW, 172);
@@ -225,14 +221,14 @@ class Main extends egret.DisplayObjectContainer {
         Page1.addChild(Mask4);//黑框4 
 
 //////////////////////总是在上的页面
-        var Pageall:egret.Sprite = new egret.Sprite();
-        this.addChild(Pageall);//页面容器2
+        var Pageall:egret.DisplayObjectContainer = new egret.DisplayObjectContainer();
+        this.addChild(Pageall);//页面容器最上
         
         var topMask = new egret.Shape();
         topMask.graphics.beginFill(0x000000, 0.5);
         topMask.graphics.drawRect(0, 0, stageW, 205);
         topMask.graphics.endFill();
-        Pageall.addChild(topMask);//黑框1（标题）
+        Pageall.addChild(topMask);//黑框（标题）
 
         var icon1:egret.Bitmap = this.createBitmapByName("egret_icon_png");
         Pageall.addChild(icon1);
@@ -276,7 +272,8 @@ class Main extends egret.DisplayObjectContainer {
         //icon_music.addEventListener(egret.TouchEvent.TOUCH_TAP, onScroll, this);   
 
 //////////////////////////////////各类事件
-        Page1.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+
+/*      Page1.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
             this.setChildIndex(Page1, this.numChildren - 1);
             this.setChildIndex(Pageall, this.numChildren + 1);
         }, this );//页面1至上 
@@ -285,12 +282,18 @@ class Main extends egret.DisplayObjectContainer {
             this.setChildIndex(Page2, this.numChildren - 1);
             this.setChildIndex(Pageall, this.numChildren + 1);
         }, this );//页面2至上  
-
+*/
         function onScroll(e: egret.TouchEvent): void {
               egret.Tween.get( colorLabel1_1 ).to( {x:0,y:260}, 300, egret.Ease.sineIn );
               egret.Tween.get( colorLabel1_2 ).to( {x:82,y:310}, 300, egret.Ease.sineIn );
               egret.Tween.get( colorLabel1_3 ).to( {x:120,y:360}, 300, egret.Ease.sineIn );
         }//umbra的缓动
+
+        Page1.addEventListener(egret.TouchEvent.TOUCH_BEGIN, Page1.mouseDown, Page1);
+        Page1.addEventListener(egret.TouchEvent.TOUCH_END, Page1.mouseUp, Page1);
+
+        Page2.addEventListener(egret.TouchEvent.TOUCH_BEGIN, Page2.mouseDown, Page2);
+        Page2.addEventListener(egret.TouchEvent.TOUCH_END, Page2.mouseUp, Page2);         
     }
 //////////////////////////////////后函数
 
@@ -343,5 +346,37 @@ class Main extends egret.DisplayObjectContainer {
      
     private changeDescription(textfield:egret.TextField, textFlow:Array<egret.ITextElement>):void {
         textfield.textFlow = textFlow;
+    }
+}
+
+/////////////////////////////////Page自定义类
+class Page extends egret.DisplayObjectContainer {
+
+    private _touchStatus:boolean = false;              //当前触摸状态，按下时，值为true
+    private _distance:egret.Point = new egret.Point(); //鼠标点击时，鼠标全局坐标与_bird的位置差
+
+    public mouseDown(evt:egret.TouchEvent) {
+             this._touchStatus = true;
+             this._distance.x = evt.stageX - this.x;
+             this._distance.y = evt.stageY - this.y;
+             this.stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.mouseMove, this);
+    }
+
+    private mouseMove(evt:egret.TouchEvent) {
+            if( this._touchStatus ) {
+                 this.y = evt.stageY - this._distance.y;
+                 if( this.y < -450 ){
+                     egret.Tween.get( this ).to( {x:0,y:-1136}, 300, egret.Ease.sineIn );
+                     this.setChildIndex(this, this.numChildren - 1);
+                 }
+            }            
+    }
+
+    public mouseUp(evt:egret.TouchEvent) {
+            this._touchStatus = false;
+            if( this.y >= -450 ) {
+                egret.Tween.get( this ).to( {x:0,y:0}, 300, egret.Ease.sineIn );
+            }
+            this.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.mouseMove, this);
     }
 }
