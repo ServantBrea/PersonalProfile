@@ -120,6 +120,19 @@ class Main extends egret.DisplayObjectContainer {
      // Create a game scene     
      
     private createGameScene1():void {
+///////////////////////////页面3  
+
+        var Page3:Page = new Page();
+        this.addChild(Page3);//页面容器3
+        Page3.touchEnabled = true;
+
+        var sky:egret.Bitmap = this.createBitmapByName("sce2_jpg");
+        Page3.addChild(sky);
+        var stageW:number = this.stage.stageWidth;
+        var stageH:number = this.stage.stageHeight;
+        sky.width = stageW;
+        sky.height = stageH;//全背景      
+        
 ///////////////////////////页面2        
         var Page2:Page = new Page();
         this.addChild(Page2);//页面容器2
@@ -221,7 +234,7 @@ class Main extends egret.DisplayObjectContainer {
         Page1.addChild(Mask4);//黑框4 
 
 //////////////////////总是在上的页面
-        var Pageall:egret.DisplayObjectContainer = new egret.DisplayObjectContainer();
+        var Pageall:Page = new Page();
         this.addChild(Pageall);//页面容器最上
         
         var topMask = new egret.Shape();
@@ -281,6 +294,7 @@ class Main extends egret.DisplayObjectContainer {
        
         pagemove(Page1);
         pagemove(Page2);
+        pagemove(Page3);
 
         function pagemove(p:Page):void {
              p.addEventListener(egret.TouchEvent.TOUCH_BEGIN, p.mouseDown, p);

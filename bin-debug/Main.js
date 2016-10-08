@@ -91,6 +91,16 @@ var Main = (function (_super) {
     // 创建游戏场景
     // Create a game scene     
     p.createGameScene1 = function () {
+        ///////////////////////////页面3  
+        var Page3 = new Page();
+        this.addChild(Page3); //页面容器3
+        Page3.touchEnabled = true;
+        var sky = this.createBitmapByName("sce2_jpg");
+        Page3.addChild(sky);
+        var stageW = this.stage.stageWidth;
+        var stageH = this.stage.stageHeight;
+        sky.width = stageW;
+        sky.height = stageH; //全背景      
         ///////////////////////////页面2        
         var Page2 = new Page();
         this.addChild(Page2); //页面容器2
@@ -180,7 +190,7 @@ var Main = (function (_super) {
         Mask4.y = 853;
         Page1.addChild(Mask4); //黑框4 
         //////////////////////总是在上的页面
-        var Pageall = new egret.DisplayObjectContainer();
+        var Pageall = new Page();
         this.addChild(Pageall); //页面容器最上
         var topMask = new egret.Shape();
         topMask.graphics.beginFill(0x000000, 0.5);
@@ -231,6 +241,7 @@ var Main = (function (_super) {
         } //umbra的缓动
         pagemove(Page1);
         pagemove(Page2);
+        pagemove(Page3);
         function pagemove(p) {
             p.addEventListener(egret.TouchEvent.TOUCH_BEGIN, p.mouseDown, p);
             p.addEventListener(egret.TouchEvent.TOUCH_END, p.mouseUp, p);
