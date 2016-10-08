@@ -93,7 +93,7 @@ var Main = (function (_super) {
     p.createGameScene1 = function () {
         ///////////////////////////页面2        
         var Page2 = new Page();
-        this.addChildAt(Page2, 1); //页面容器2
+        this.addChild(Page2); //页面容器2
         Page2.touchEnabled = true;
         var sky = this.createBitmapByName("sce1_jpg");
         Page2.addChild(sky);
@@ -103,7 +103,7 @@ var Main = (function (_super) {
         sky.height = stageH; //全背景
         ///////////////////////////页面1
         var Page1 = new Page();
-        this.addChildAt(Page1, 2); //页面容器1
+        this.addChild(Page1); //页面容器1
         Page1.touchEnabled = true;
         var sky = this.createBitmapByName("sce_jpg");
         Page1.addChild(sky);
@@ -181,7 +181,7 @@ var Main = (function (_super) {
         Page1.addChild(Mask4); //黑框4 
         //////////////////////总是在上的页面
         var Pageall = new egret.DisplayObjectContainer();
-        this.addChildAt(Pageall, 3); //页面容器最上
+        this.addChild(Pageall); //页面容器最上
         var topMask = new egret.Shape();
         topMask.graphics.beginFill(0x000000, 0.5);
         topMask.graphics.drawRect(0, 0, stageW, 205);
@@ -224,16 +224,6 @@ var Main = (function (_super) {
         icon_music.touchEnabled = true;
         //icon_music.addEventListener(egret.TouchEvent.TOUCH_TAP, onScroll, this);   
         //////////////////////////////////各类事件
-        /*      Page1.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-                this.setChildIndex(Page1, this.numChildren - 1);
-                this.setChildIndex(Pageall, this.numChildren + 1);
-            }, this );//页面1至上
-    
-            Page2.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-                this.setChildIndex(Page2, this.numChildren - 1);
-                this.setChildIndex(Pageall, this.numChildren + 1);
-            }, this );//页面2至上
-          */
         function onScroll(e) {
             egret.Tween.get(colorLabel1_1).to({ x: 0, y: 260 }, 300, egret.Ease.sineIn);
             egret.Tween.get(colorLabel1_2).to({ x: 82, y: 310 }, 300, egret.Ease.sineIn);
@@ -300,27 +290,32 @@ var Page = (function (_super) {
     var d = __define,c=Page,p=c.prototype;
     p.mouseDown = function (evt) {
         this._touchStatus = true;
-        this._distance.x = evt.stageX - this.x;
         this._distance.y = evt.stageY - this.y;
         this.stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.mouseMove, this);
     };
     p.mouseMove = function (evt) {
         if (this._touchStatus) {
             this.y = evt.stageY - this._distance.y;
-            if (this.y < -450) {
-                egret.Tween.get(this).to({ x: 0, y: -1136 }, 300, egret.Ease.sineIn);
+            if (this.y < -500) {
+                egret.Tween.get(this).to({ x: 0, y: -1136 }, 300, egret.Ease.sineIn)
+                    .wait(300).to({ x: 0, y: 0 }, 300, egret.Ease.sineIn);
+                this.parent.addChildAt(this, 0);
+                this.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.mouseMove, this);
             }
-            if (this.y > 450) {
-                egret.Tween.get(this).to({ x: 0, y: 1136 }, 300, egret.Ease.sineIn);
+            if (this.y > 500) {
+                egret.Tween.get(this).to({ x: 0, y: -1136 }, 300, egret.Ease.sineIn)
+                    .wait(300).to({ x: 0, y: 0 }, 300, egret.Ease.sineIn);
+                this.parent.addChildAt(this, 0);
+                this.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.mouseMove, this);
             }
         }
     };
     p.mouseUp = function (evt) {
         this._touchStatus = false;
-        if (this.y >= -450) {
+        if (this.y >= -500) {
             egret.Tween.get(this).to({ x: 0, y: 0 }, 300, egret.Ease.sineIn);
         }
-        if (this.y <= 450) {
+        if (this.y <= 500) {
             egret.Tween.get(this).to({ x: 0, y: 0 }, 300, egret.Ease.sineIn);
         }
         this.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.mouseMove, this);

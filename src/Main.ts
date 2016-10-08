@@ -122,7 +122,7 @@ class Main extends egret.DisplayObjectContainer {
     private createGameScene1():void {
 ///////////////////////////页面2        
         var Page2:Page = new Page();
-        this.addChildAt(Page2,1);//页面容器2
+        this.addChild(Page2);//页面容器2
         Page2.touchEnabled = true;
 
         var sky:egret.Bitmap = this.createBitmapByName("sce1_jpg");
@@ -134,7 +134,7 @@ class Main extends egret.DisplayObjectContainer {
 
 ///////////////////////////页面1
         var Page1:Page = new Page();
-        this.addChildAt(Page1,2);//页面容器1
+        this.addChild(Page1);//页面容器1
         Page1.touchEnabled = true;
 
         var sky:egret.Bitmap = this.createBitmapByName("sce_jpg");
@@ -222,7 +222,7 @@ class Main extends egret.DisplayObjectContainer {
 
 //////////////////////总是在上的页面
         var Pageall:egret.DisplayObjectContainer = new egret.DisplayObjectContainer();
-        this.addChildAt(Pageall,3);//页面容器最上
+        this.addChild(Pageall);//页面容器最上
         
         var topMask = new egret.Shape();
         topMask.graphics.beginFill(0x000000, 0.5);
@@ -273,22 +273,12 @@ class Main extends egret.DisplayObjectContainer {
 
 //////////////////////////////////各类事件
 
-    /*      Page1.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-            this.setChildIndex(Page1, this.numChildren - 1);
-            this.setChildIndex(Pageall, this.numChildren + 1);
-        }, this );//页面1至上 
-
-        Page2.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-            this.setChildIndex(Page2, this.numChildren - 1);
-            this.setChildIndex(Pageall, this.numChildren + 1);
-        }, this );//页面2至上  
-      */
         function onScroll(e: egret.TouchEvent): void {
               egret.Tween.get( colorLabel1_1 ).to( {x:0,y:260}, 300, egret.Ease.sineIn );
               egret.Tween.get( colorLabel1_2 ).to( {x:82,y:310}, 300, egret.Ease.sineIn );
               egret.Tween.get( colorLabel1_3 ).to( {x:120,y:360}, 300, egret.Ease.sineIn );
         }//umbra的缓动
-
+       
         pagemove(Page1);
         pagemove(Page2);
 
@@ -359,7 +349,6 @@ class Page extends egret.DisplayObjectContainer {
 
     public mouseDown(evt:egret.TouchEvent) {
              this._touchStatus = true;
-             this._distance.x = evt.stageX - this.x;
              this._distance.y = evt.stageY - this.y;
              this.stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.mouseMove, this);
     }
@@ -367,21 +356,27 @@ class Page extends egret.DisplayObjectContainer {
     private mouseMove(evt:egret.TouchEvent) {
             if( this._touchStatus ) {
                  this.y = evt.stageY - this._distance.y;
-                 if( this.y < -450 ){
-                     egret.Tween.get( this ).to( {x:0,y:-1136}, 300, egret.Ease.sineIn );
+                 if( this.y < -500 ){
+                     egret.Tween.get( this ).to( {x:0,y:-1136}, 300, egret.Ease.sineIn )
+                     .wait(300).to({x:0,y:0}, 300, egret.Ease.sineIn);
+                     this.parent.addChildAt(this,0);
+                     this.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.mouseMove, this);
                  }
-                 if( this.y > 450 ){
-                     egret.Tween.get( this ).to( {x:0,y:1136}, 300, egret.Ease.sineIn );
+                 if( this.y > 500 ){
+                     egret.Tween.get( this ).to( {x:0,y:-1136}, 300, egret.Ease.sineIn )
+                     .wait(300).to({x:0,y:0}, 300, egret.Ease.sineIn);
+                     this.parent.addChildAt(this,0);
+                     this.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.mouseMove, this);
                  }
             }            
     }
 
     public mouseUp(evt:egret.TouchEvent) {
             this._touchStatus = false;
-            if( this.y >= -450 ) {
+            if( this.y >= -500 ) {
                 egret.Tween.get( this ).to( {x:0,y:0}, 300, egret.Ease.sineIn );
             }
-            if( this.y <= 450 ) {
+            if( this.y <= 500 ) {
                 egret.Tween.get( this ).to( {x:0,y:0}, 300, egret.Ease.sineIn );
             }
             this.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.mouseMove, this);
