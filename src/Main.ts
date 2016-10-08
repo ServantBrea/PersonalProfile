@@ -122,7 +122,7 @@ class Main extends egret.DisplayObjectContainer {
     private createGameScene1():void {
 ///////////////////////////页面2        
         var Page2:Page = new Page();
-        this.addChild(Page2);//页面容器2
+        this.addChildAt(Page2,1);//页面容器2
         Page2.touchEnabled = true;
 
         var sky:egret.Bitmap = this.createBitmapByName("sce1_jpg");
@@ -134,7 +134,7 @@ class Main extends egret.DisplayObjectContainer {
 
 ///////////////////////////页面1
         var Page1:Page = new Page();
-        this.addChild(Page1);//页面容器1
+        this.addChildAt(Page1,2);//页面容器1
         Page1.touchEnabled = true;
 
         var sky:egret.Bitmap = this.createBitmapByName("sce_jpg");
@@ -222,7 +222,7 @@ class Main extends egret.DisplayObjectContainer {
 
 //////////////////////总是在上的页面
         var Pageall:egret.DisplayObjectContainer = new egret.DisplayObjectContainer();
-        this.addChild(Pageall);//页面容器最上
+        this.addChildAt(Pageall,3);//页面容器最上
         
         var topMask = new egret.Shape();
         topMask.graphics.beginFill(0x000000, 0.5);
@@ -273,7 +273,7 @@ class Main extends egret.DisplayObjectContainer {
 
 //////////////////////////////////各类事件
 
-/*      Page1.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+    /*      Page1.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
             this.setChildIndex(Page1, this.numChildren - 1);
             this.setChildIndex(Pageall, this.numChildren + 1);
         }, this );//页面1至上 
@@ -282,18 +282,20 @@ class Main extends egret.DisplayObjectContainer {
             this.setChildIndex(Page2, this.numChildren - 1);
             this.setChildIndex(Pageall, this.numChildren + 1);
         }, this );//页面2至上  
-*/
+      */
         function onScroll(e: egret.TouchEvent): void {
               egret.Tween.get( colorLabel1_1 ).to( {x:0,y:260}, 300, egret.Ease.sineIn );
               egret.Tween.get( colorLabel1_2 ).to( {x:82,y:310}, 300, egret.Ease.sineIn );
               egret.Tween.get( colorLabel1_3 ).to( {x:120,y:360}, 300, egret.Ease.sineIn );
         }//umbra的缓动
 
-        Page1.addEventListener(egret.TouchEvent.TOUCH_BEGIN, Page1.mouseDown, Page1);
-        Page1.addEventListener(egret.TouchEvent.TOUCH_END, Page1.mouseUp, Page1);
+        pagemove(Page1);
+        pagemove(Page2);
 
-        Page2.addEventListener(egret.TouchEvent.TOUCH_BEGIN, Page2.mouseDown, Page2);
-        Page2.addEventListener(egret.TouchEvent.TOUCH_END, Page2.mouseUp, Page2);         
+        function pagemove(p:Page):void {
+             p.addEventListener(egret.TouchEvent.TOUCH_BEGIN, p.mouseDown, p);
+             p.addEventListener(egret.TouchEvent.TOUCH_END, p.mouseUp, p);            
+        }         
     }
 //////////////////////////////////后函数
 
