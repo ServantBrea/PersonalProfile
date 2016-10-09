@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "bg_jpg,egret_icon_png,description_json,sce_jpg,umbra_png,music_png,sce1_jpg,sce2_jpg",
+			"keys": "bg_jpg,egret_icon_png,description_json,sce_jpg,umbra_png,music_png,sce1_jpg,sce2_jpg,ah_mp3",
 			"name": "preload"
 		}
 	],
@@ -45,6 +45,11 @@
 			"name": "sce2_jpg",
 			"type": "image",
 			"url": "assets/sce2.jpg"
+		},
+		{
+			"name": "ah_mp3",
+			"type": "sound",
+			"url": "assets/ah.mp3"
 		}
 	]
 }

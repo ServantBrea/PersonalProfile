@@ -29,6 +29,8 @@
 
 class Main extends egret.DisplayObjectContainer {
 //前面部分 
+    
+    private static STEP_ROT:number = 1;//旋转步长定义
 
     // 加载进度界面
     // Process interface loading    
@@ -107,7 +109,7 @@ class Main extends egret.DisplayObjectContainer {
     // Create a game scene         
     private createGameScene1():void {  
         var stageW = this.stage.stageWidth;
-        var stageH = this.stage.stageHeight;
+        var stageH = this.stage.stageHeight;//获取舞台长宽
 //页面3
         var Page3:Page = new Page();
         this.addChild(Page3);
@@ -136,14 +138,14 @@ class Main extends egret.DisplayObjectContainer {
         var Mask1 = this.createMask(0,238,stageW,172);
         Page1.addChild(Mask1);//定义黑框1
 
-        var icon_music:egret.Bitmap = this.createBitmapByName("umbra_png");
-        Page1.addChild(icon_music);
-        icon_music.scaleX = 0.3;
-        icon_music.scaleY = 0.3;
-        icon_music.x = 54;
-        icon_music.y = 288;
-        icon_music.touchEnabled = true;
-        icon_music.addEventListener(egret.TouchEvent.TOUCH_TAP, onScroll, this);//定义标签(unbra)按钮
+        var icon_button1:egret.Bitmap = this.createBitmapByName("umbra_png");
+        Page1.addChild(icon_button1);
+        icon_button1.scaleX = 0.3;
+        icon_button1.scaleY = 0.3;
+        icon_button1.x = 54;
+        icon_button1.y = 288;
+        icon_button1.touchEnabled = true;
+        icon_button1.addEventListener(egret.TouchEvent.TOUCH_TAP, onScroll, this);//定义标签(unbra)按钮
         
         var text1_1 = this.createText();
         text1_1.textColor = 0x0000ff;       
@@ -221,18 +223,60 @@ class Main extends egret.DisplayObjectContainer {
         //根据name关键字，异步获取一个json配置文件，name属性请参考resources/resource.json配置文件的内容。
         // Get asynchronously a json configuration file according to name keyword. As for the property of name please refer to the configuration file of resources/resource.json.
         RES.getResAsync("description_json", this.startAnimation, this)//定义特殊文字显示
+        
+        //音乐按钮
+        var music:egret.Sound = RES.getRes("ah_mp3");
+        var musicChannel:egret.SoundChannel;
+        var stop_time:number=0;
+        musicChannel=music.play(stop_time,0);//定义音乐
+        var Anim_point =AnimModes.Anim_0;//定义按钮模式
 
         var icon_music:egret.Bitmap = this.createBitmapByName("music_png");
         Pageall.addChild(icon_music);
         icon_music.scaleX = 0.25;
         icon_music.scaleY = 0.25;
-        icon_music.x = 530;
-        icon_music.y = 1040;
+        icon_music.anchorOffsetX = icon_music.width/2;
+        icon_music.anchorOffsetY = icon_music.height/2;//改变锚点位置
+        icon_music.x = 570;
+        icon_music.y = 1080;
         icon_music.touchEnabled = true;
-        //icon_music.addEventListener(egret.TouchEvent.TOUCH_TAP, onScroll, this);
-        //定义标签(music)按钮   
+
+        icon_music.addEventListener(egret.TouchEvent.TOUCH_TAP, changeAnim, this);
+        icon_music.addEventListener(egret.TouchEvent.ENTER_FRAME, if_rotation, this);         
 
 //各种事件函数
+        function changeAnim(e: egret.TouchEvent): void {
+              Anim_point = (Anim_point + 1 ) % 2;
+              switch (Anim_point) {
+                  case AnimModes.Anim_0 : 
+                        musicChannel=music.play(stop_time,0);
+                        break;
+                  case AnimModes.Anim_1 :
+                        stop_time = musicChannel.position; 
+                        musicChannel.stop();
+                        musicChannel = null;
+                        break;
+            } 
+        }//改变按钮和音乐播放模式
+
+        function if_rotation(e: egret.TouchEvent):void {
+            switch (Anim_point) {
+               case AnimModes.Anim_0 : icon_music.rotation += Main.STEP_ROT;
+                    break;
+               case AnimModes.Anim_1 : ;
+                    break;
+            }        
+        }//是否旋转
+
+        function if_playmusic(e: egret.TouchEvent):void {
+            switch (Anim_point) {
+               case AnimModes.Anim_0 : music.play();
+                    break;
+               case AnimModes.Anim_1 : music.close();
+                    break;
+            }        
+        }//是否旋转
+         
         function onScroll(e: egret.TouchEvent): void {
               egret.Tween.get( text1_1 ).to( {x:0,y:260}, 300, egret.Ease.sineIn );
               egret.Tween.get( text1_2 ).to( {x:82,y:310}, 300, egret.Ease.sineIn );
@@ -246,6 +290,7 @@ class Main extends egret.DisplayObjectContainer {
     }
 
 //各种自定义函数
+
     //根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
     //Create a Bitmap object according to name keyword.As for the property of name please refer to the configuration file of resources/resource.json.    
     private createBitmapByName(name:string):egret.Bitmap {
@@ -358,4 +403,9 @@ class Page extends egret.DisplayObjectContainer {
             }
             this.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.mouseMove, this);
     }
+}
+
+class AnimModes{
+    public static Anim_0:number = 0;
+    public static Anim_1:number = 1;
 }

@@ -91,7 +91,7 @@ var Main = (function (_super) {
     // Create a game scene         
     p.createGameScene1 = function () {
         var stageW = this.stage.stageWidth;
-        var stageH = this.stage.stageHeight;
+        var stageH = this.stage.stageHeight; //获取舞台长宽
         //页面3
         var Page3 = new Page();
         this.addChild(Page3);
@@ -115,14 +115,14 @@ var Main = (function (_super) {
         Page1.addChild(sky1); //绘制页面1背景
         var Mask1 = this.createMask(0, 238, stageW, 172);
         Page1.addChild(Mask1); //定义黑框1
-        var icon_music = this.createBitmapByName("umbra_png");
-        Page1.addChild(icon_music);
-        icon_music.scaleX = 0.3;
-        icon_music.scaleY = 0.3;
-        icon_music.x = 54;
-        icon_music.y = 288;
-        icon_music.touchEnabled = true;
-        icon_music.addEventListener(egret.TouchEvent.TOUCH_TAP, onScroll, this); //定义标签(unbra)按钮
+        var icon_button1 = this.createBitmapByName("umbra_png");
+        Page1.addChild(icon_button1);
+        icon_button1.scaleX = 0.3;
+        icon_button1.scaleY = 0.3;
+        icon_button1.x = 54;
+        icon_button1.y = 288;
+        icon_button1.touchEnabled = true;
+        icon_button1.addEventListener(egret.TouchEvent.TOUCH_TAP, onScroll, this); //定义标签(unbra)按钮
         var text1_1 = this.createText();
         text1_1.textColor = 0x0000ff;
         text1_1.text = "个人身份";
@@ -189,16 +189,59 @@ var Main = (function (_super) {
         //根据name关键字，异步获取一个json配置文件，name属性请参考resources/resource.json配置文件的内容。
         // Get asynchronously a json configuration file according to name keyword. As for the property of name please refer to the configuration file of resources/resource.json.
         RES.getResAsync("description_json", this.startAnimation, this); //定义特殊文字显示
+        var music = RES.getRes("ah_mp3");
+        var musicChannel;
+        var stop_time = 0;
+        musicChannel = music.play(stop_time, 0); //定义音乐
+        var Anim_point = AnimModes.Anim_0; //定义按钮模式
         var icon_music = this.createBitmapByName("music_png");
         Pageall.addChild(icon_music);
         icon_music.scaleX = 0.25;
         icon_music.scaleY = 0.25;
-        icon_music.x = 530;
-        icon_music.y = 1040;
+        icon_music.anchorOffsetX = icon_music.width / 2;
+        icon_music.anchorOffsetY = icon_music.height / 2; //改变锚点位置
+        icon_music.x = 570;
+        icon_music.y = 1080;
         icon_music.touchEnabled = true;
-        //icon_music.addEventListener(egret.TouchEvent.TOUCH_TAP, onScroll, this);
-        //定义标签(music)按钮   
+        icon_music.addEventListener(egret.TouchEvent.TOUCH_TAP, changeAnim, this);
+        icon_music.addEventListener(egret.TouchEvent.ENTER_FRAME, if_rotation, this);
+        //icon_music.addEventListener(egret.TouchEvent.TOUCH_TAP, music_stop, this);
+        //定义标签(music)按钮  
         //各种事件函数
+        function changeAnim(e) {
+            Anim_point = (Anim_point + 1) % 2;
+            switch (Anim_point) {
+                case AnimModes.Anim_0:
+                    musicChannel = music.play(stop_time, 0);
+                    break;
+                case AnimModes.Anim_1:
+                    stop_time = musicChannel.position;
+                    musicChannel.stop();
+                    //stop_time = musicChannel.position;
+                    musicChannel = null;
+                    break;
+            }
+        } //改变按钮和音乐播放模式
+        function if_rotation(e) {
+            switch (Anim_point) {
+                case AnimModes.Anim_0:
+                    icon_music.rotation += Main.STEP_ROT;
+                    break;
+                case AnimModes.Anim_1:
+                    ;
+                    break;
+            }
+        } //是否旋转
+        function if_playmusic(e) {
+            switch (Anim_point) {
+                case AnimModes.Anim_0:
+                    music.play();
+                    break;
+                case AnimModes.Anim_1:
+                    music.close();
+                    break;
+            }
+        } //是否旋转
         function onScroll(e) {
             egret.Tween.get(text1_1).to({ x: 0, y: 260 }, 300, egret.Ease.sineIn);
             egret.Tween.get(text1_2).to({ x: 82, y: 310 }, 300, egret.Ease.sineIn);
@@ -273,6 +316,8 @@ var Main = (function (_super) {
         nomalText.cacheAsBitmap = true;
         return nomalText;
     };
+    //前面部分 
+    Main.STEP_ROT = 1; //旋转步长定义
     return Main;
 }(egret.DisplayObjectContainer));
 egret.registerClass(Main,'Main');
@@ -319,4 +364,13 @@ var Page = (function (_super) {
     return Page;
 }(egret.DisplayObjectContainer));
 egret.registerClass(Page,'Page');
+var AnimModes = (function () {
+    function AnimModes() {
+    }
+    var d = __define,c=AnimModes,p=c.prototype;
+    AnimModes.Anim_0 = 0;
+    AnimModes.Anim_1 = 1;
+    return AnimModes;
+}());
+egret.registerClass(AnimModes,'AnimModes');
 //# sourceMappingURL=Main.js.map
