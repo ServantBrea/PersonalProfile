@@ -115,40 +115,38 @@ var Main = (function (_super) {
         Page1.addChild(sky1); //绘制页面1背景
         var Mask1 = this.createMask(0, 238, stageW, 172);
         Page1.addChild(Mask1); //定义黑框1
-        var icon_button1 = this.createBitmapByName("umbra_png");
+        var icon_button1 = this.createBitmapByName("umbra_png", 75, 325, 0.4, 0.4);
         Page1.addChild(icon_button1);
-        icon_button1.scaleX = 0.3;
-        icon_button1.scaleY = 0.3;
-        icon_button1.x = 54;
-        icon_button1.y = 288;
+        changescale(icon_button1, icon_button1.scaleX, icon_button1.scaleY);
         icon_button1.touchEnabled = true;
-        icon_button1.addEventListener(egret.TouchEvent.TOUCH_TAP, onScroll, this); //定义标签(unbra)按钮
-        var text1_1 = this.createText();
-        text1_1.textColor = 0x0000ff;
-        text1_1.text = "个人身份";
-        text1_1.scrollRect = new egret.Rectangle(0, 0, 300, 50);
-        text1_1.size = 35;
-        text1_1.x = 1000;
-        text1_1.y = 260;
-        Page1.addChild(text1_1); //定义文字
-        var text1_2 = this.createText();
-        text1_2.textColor = 0xffffff;
-        text1_2.text = "北京工业大学信息学部";
-        text1_2.scrollRect = new egret.Rectangle(0, 0, 400, 50);
-        text1_2.size = 30;
-        text1_2.x = 1000;
-        text1_2.y = 310;
-        Page1.addChild(text1_2); //定义文字
-        var text1_3 = this.createText();
-        text1_3.textColor = 0xffffff;
-        text1_3.text = "数字媒体技术140811班25号";
-        text1_3.scrollRect = new egret.Rectangle(0, 0, 500, 50);
-        text1_3.size = 30;
-        text1_3.x = 1000;
-        text1_3.y = 360;
-        Page1.addChild(text1_3); //定义文字
+        icon_button1.addEventListener(egret.TouchEvent.TOUCH_TAP, onScroll1, this); //定义标签(unbra)按钮
+        var text1 = this.createText(1000, 270, 35);
+        text1.textFlow = [
+            { text: "个人身份", style: { "textColor": 0x0000ff, "size": 35 } },
+            { text: "\n" },
+            { text: "北京工业大学信息学部", style: { "textColor": 0xffffff, "size": 30 } },
+            { text: "\n" },
+            { text: "数字媒体技术140811班25号", style: { "textColor": 0xffffff, "size": 30 } }
+        ];
+        Page1.addChild(text1); //定义文字
         var Mask2 = this.createMask(0, 443, stageW, 172);
         Page1.addChild(Mask2); //定义黑框2
+        var icon_button2 = this.createBitmapByName("witcher_png", 70, 530, 0.5, 0.5);
+        Page1.addChild(icon_button2);
+        changescale(icon_button2, icon_button2.scaleX, icon_button2.scaleY);
+        icon_button2.touchEnabled = true;
+        icon_button2.addEventListener(egret.TouchEvent.TOUCH_TAP, onScroll2, this); //定义标签(witcher)按钮
+        var text2 = this.createText(1000, 455, 35);
+        text2.textFlow = [
+            { text: "联系信息", style: { "textColor": 0x0000ff, "size": 35 } },
+            { text: "\n" },
+            { text: "手机：13687886372", style: { "textColor": 0xffffff, "size": 30 } },
+            { text: "\n" },
+            { text: "QQ：516916849", style: { "textColor": 0xffffff, "size": 30 } },
+            { text: "\n" },
+            { text: "微信：ServantBrea", style: { "textColor": 0xffffff, "size": 30 } }
+        ];
+        Page1.addChild(text2); //定义文字
         var Mask3 = this.createMask(0, 648, stageW, 172);
         Page1.addChild(Mask3); //定义黑框3
         var Mask4 = this.createMask(0, 853, stageW, 172);
@@ -161,53 +159,49 @@ var Main = (function (_super) {
         topMask.graphics.drawRect(0, 0, stageW, 205);
         topMask.graphics.endFill();
         Pageall.addChild(topMask); //定义黑框（标题）
-        var icon1 = this.createBitmapByName("egret_icon_png");
-        Pageall.addChild(icon1);
-        icon1.x = 54;
-        icon1.y = 12; //定义标签（白鹭）        
-        var colorLabel = new egret.TextField();
-        colorLabel.textColor = 0xffffff;
-        colorLabel.width = stageW - 172;
-        colorLabel.textAlign = "center";
-        colorLabel.bold = true;
-        colorLabel.text = "周景城";
-        colorLabel.size = 60;
-        colorLabel.x = 172;
-        colorLabel.y = 60;
-        Pageall.addChild(colorLabel); //定义文字
-        var textfield = new egret.TextField();
+        var icon1 = this.createBitmapByName("egret_icon_png", 54, 12, 1, 1);
+        Pageall.addChild(icon1); //定义标签（白鹭）        
+        var toptext = this.createText(310, 60, 60);
+        toptext.textColor = 0xffffff;
+        toptext.text = "周景城";
+        Pageall.addChild(toptext); //定义标题文字
+        var endtext = this.createText(20, 1100, 20);
+        endtext.textColor = 0xffffff;
+        endtext.text = "By Servant.For.Brea";
+        Pageall.addChild(endtext); //定义标题文字
+        var textfield = this.createText(172, 135, 30);
         Pageall.addChild(textfield);
         textfield.alpha = 0;
-        textfield.bold = true;
-        textfield.width = stageW - 172;
         textfield.textAlign = egret.HorizontalAlign.CENTER;
-        textfield.size = 30;
         textfield.textColor = 0xffffff;
-        textfield.x = 172;
-        textfield.y = 135;
         this.textfield = textfield;
         //根据name关键字，异步获取一个json配置文件，name属性请参考resources/resource.json配置文件的内容。
         // Get asynchronously a json configuration file according to name keyword. As for the property of name please refer to the configuration file of resources/resource.json.
         RES.getResAsync("description_json", this.startAnimation, this); //定义特殊文字显示
+        var icon_updown = this.createBitmapByName("updown_png", 310, 1070, 0.06, 0.06);
+        Pageall.addChild(icon_updown);
+        //音乐按钮
         var music = RES.getRes("ah_mp3");
         var musicChannel;
         var stop_time = 0;
         musicChannel = music.play(stop_time, 0); //定义音乐
         var Anim_point = AnimModes.Anim_0; //定义按钮模式
-        var icon_music = this.createBitmapByName("music_png");
+        var icon_music = this.createBitmapByName("music_png", 580, 1080, 0.5, 0.5);
         Pageall.addChild(icon_music);
-        icon_music.scaleX = 0.25;
-        icon_music.scaleY = 0.25;
         icon_music.anchorOffsetX = icon_music.width / 2;
         icon_music.anchorOffsetY = icon_music.height / 2; //改变锚点位置
-        icon_music.x = 570;
-        icon_music.y = 1080;
         icon_music.touchEnabled = true;
         icon_music.addEventListener(egret.TouchEvent.TOUCH_TAP, changeAnim, this);
         icon_music.addEventListener(egret.TouchEvent.ENTER_FRAME, if_rotation, this);
-        //icon_music.addEventListener(egret.TouchEvent.TOUCH_TAP, music_stop, this);
-        //定义标签(music)按钮  
         //各种事件函数
+        function changescale(icon, sX, sY) {
+            var n = 0;
+            icon.anchorOffsetX = icon.width / 2;
+            icon.anchorOffsetY = icon.height / 2; //改变锚点位置
+            icon.addEventListener(egret.Event.ENTER_FRAME, function (evt) {
+                icon.scaleX = icon.scaleY = 0.5 * sX + 0.5 * sY * Math.abs(Math.sin(n += Main.STEP_SCALE));
+            }, this); /// 仅缩放，缩放范围
+        } //自身放大缩小
         function changeAnim(e) {
             Anim_point = (Anim_point + 1) % 2;
             switch (Anim_point) {
@@ -217,7 +211,6 @@ var Main = (function (_super) {
                 case AnimModes.Anim_1:
                     stop_time = musicChannel.position;
                     musicChannel.stop();
-                    //stop_time = musicChannel.position;
                     musicChannel = null;
                     break;
             }
@@ -242,27 +235,30 @@ var Main = (function (_super) {
                     break;
             }
         } //是否旋转
-        function onScroll(e) {
-            egret.Tween.get(text1_1).to({ x: 0, y: 260 }, 300, egret.Ease.sineIn);
-            egret.Tween.get(text1_2).to({ x: 82, y: 310 }, 300, egret.Ease.sineIn);
-            egret.Tween.get(text1_3).to({ x: 120, y: 360 }, 300, egret.Ease.sineIn);
+        function onScroll1(e) {
+            egret.Tween.get(text1).to({ x: 180, y: 270 }, 300, egret.Ease.sineIn);
         } //点击umbra的缓动效果
+        function onScroll2(e) {
+            egret.Tween.get(text2).to({ x: 180, y: 455 }, 300, egret.Ease.sineIn);
+        } //点击witcher的缓动效果
         function pagemove(p) {
             p.addEventListener(egret.TouchEvent.TOUCH_BEGIN, p.mouseDown, p);
             p.addEventListener(egret.TouchEvent.TOUCH_END, p.mouseUp, p);
-        }
+        } //页面翻动         
     };
     //各种自定义函数
     //根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
     //Create a Bitmap object according to name keyword.As for the property of name please refer to the configuration file of resources/resource.json.    
-    p.createBitmapByName = function (name) {
+    p.createBitmapByName = function (name, x, y, xs, ys) {
         var result = new egret.Bitmap();
         var texture = RES.getRes(name);
         result.texture = texture;
+        result.x = x;
+        result.y = y;
+        result.scaleX = xs;
+        result.scaleY = ys;
         return result;
-    };
-    //描述文件加载成功，开始播放动画
-    // Description file loading is successful, start to play the animation  
+    }; //加载图
     p.startAnimation = function (result) {
         var self = this;
         var parser = new egret.HtmlTextParser();
@@ -286,38 +282,38 @@ var Main = (function (_super) {
             tw.call(change, self);
         };
         change();
-    };
-    // 切换描述内容
-    // Switch to described content 
+    }; //描述文件加载成功，开始播放动画
     p.changeDescription = function (textfield, textFlow) {
         textfield.textFlow = textFlow;
-    };
-    //生成黑框
+    }; // 切换描述内容
     p.createMask = function (x, y, w, h) {
         var Mask = new egret.Shape();
         Mask.graphics.beginFill(0x000000, 0.5);
         Mask.graphics.drawRect(x, y, w, h);
         Mask.graphics.endFill();
         return Mask;
-    };
-    //生成页面背景
+    }; //生成黑框
     p.createsky = function (filename, w, h) {
-        var sky = this.createBitmapByName(filename);
+        var sky = this.createBitmapByName(filename, 0, 0, 1, 1);
         sky.width = w;
         sky.height = h;
         return sky;
-    };
-    //格式化生成文字（具有相同特点）
-    p.createText = function () {
+    }; //生成页面背景
+    p.createText = function (x, y, s) {
         var nomalText = new egret.TextField();
         nomalText.width = this.stage.stageWidth - 172;
-        nomalText.textAlign = "center";
+        nomalText.textAlign = "left";
         nomalText.bold = true;
+        nomalText.fontFamily = "Microsoft YaHei";
+        nomalText.x = x;
+        nomalText.y = y;
+        nomalText.size = s;
         nomalText.cacheAsBitmap = true;
         return nomalText;
-    };
+    }; //格式化生成文字（具有相同特点）
     //前面部分 
     Main.STEP_ROT = 1; //旋转步长定义
+    Main.STEP_SCALE = .02; //缩放步长定义
     return Main;
 }(egret.DisplayObjectContainer));
 egret.registerClass(Main,'Main');
@@ -364,6 +360,7 @@ var Page = (function (_super) {
     return Page;
 }(egret.DisplayObjectContainer));
 egret.registerClass(Page,'Page');
+ //页面类
 var AnimModes = (function () {
     function AnimModes() {
     }
@@ -373,4 +370,5 @@ var AnimModes = (function () {
     return AnimModes;
 }());
 egret.registerClass(AnimModes,'AnimModes');
+ //按钮模式类
 //# sourceMappingURL=Main.js.map

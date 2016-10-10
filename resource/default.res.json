@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "bg_jpg,egret_icon_png,description_json,sce_jpg,umbra_png,music_png,sce1_jpg,sce2_jpg,ah_mp3",
+			"keys": "bg_jpg,egret_icon_png,description_json,sce_jpg,umbra_png,music_png,sce1_jpg,sce2_jpg,ah_mp3,updown_png,witcher_png",
 			"name": "preload"
 		}
 	],
@@ -50,6 +50,16 @@
 			"name": "ah_mp3",
 			"type": "sound",
 			"url": "assets/ah.mp3"
+		},
+		{
+			"name": "updown_png",
+			"type": "image",
+			"url": "assets/updown.png"
+		},
+		{
+			"name": "witcher_png",
+			"type": "image",
+			"url": "assets/witcher.png"
 		}
 	]
 }
