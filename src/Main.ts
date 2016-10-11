@@ -28,10 +28,10 @@
 //////////////////////////////////////////////////////////////////////////////////////
 
 class Main extends egret.DisplayObjectContainer {
-//前面部分 
-    
+//前面部分    
     private static STEP_ROT:number = 1;//旋转步长定义
     private static STEP_SCALE:number = .02;//缩放步长定义
+    private textfield:egret.TextField;
   
     private loadingView:LoadingUI;// 加载进度界面
 
@@ -40,14 +40,12 @@ class Main extends egret.DisplayObjectContainer {
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
     }
 
-    private onAddToStage(event:egret.Event) {
-        //设置加载进度界面
+    private onAddToStage(event:egret.Event) {   
         this.loadingView = new LoadingUI();
-        this.stage.addChild(this.loadingView);
-
-        //初始化Resource资源加载库
+        this.stage.addChild(this.loadingView);//设置加载进度界面
+ 
         RES.addEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
-        RES.loadConfig("resource/default.res.json", "resource/");
+        RES.loadConfig("resource/default.res.json", "resource/");//初始化Resource资源加载库
     }
           
     private onConfigComplete(event:RES.ResourceEvent):void {
@@ -74,11 +72,9 @@ class Main extends egret.DisplayObjectContainer {
         console.warn("Url:" + event.resItem.url + " has failed to load");
     }// 资源组加载出错
 
-    private onResourceLoadError(event:RES.ResourceEvent):void {
-        //TODO
-        console.warn("Group:" + event.groupName + " has failed to load");
-        //忽略加载失败的项目
-        this.onResourceLoadComplete(event);
+    private onResourceLoadError(event:RES.ResourceEvent):void {     
+        console.warn("Group:" + event.groupName + " has failed to load");//TODO    
+        this.onResourceLoadComplete(event);//忽略加载失败的项目
     }// 资源组加载出错
       
     private onResourceProgress(event:RES.ResourceEvent):void {
@@ -86,8 +82,6 @@ class Main extends egret.DisplayObjectContainer {
             this.loadingView.setProgress(event.itemsLoaded, event.itemsTotal);
         }
     }// preload资源组加载进度
-
-    private textfield:egret.TextField;
 
 //构建整个场景
     // 创建游戏场景       
@@ -98,24 +92,19 @@ class Main extends egret.DisplayObjectContainer {
         var Page3:Page = new Page();
         this.addChild(Page3);
         Page3.touchEnabled = true;//定义页面3容器
-        pagemove(Page3);//页面具有滑动效果
+        this.pagemove(Page3);//页面具有滑动效果
 
         var sky3:egret.Bitmap = this.createsky("sce2_jpg",stageW,stageH);
         Page3.addChildAt(sky3,0);//绘制页面3背景 
-         
-        var Jpg1:jpglist = new jpglist; Jpg1.jpg = this.createBitmapByName("001_jpg",0,0,1,1); Page3.addChild(Jpg1.jpg);
-        var Jpg2:jpglist = new jpglist; Jpg2.jpg = this.createBitmapByName("002_jpg",0,0,1,1); Page3.addChild(Jpg2.jpg);
-        var Jpg3:jpglist = new jpglist; Jpg3.jpg = this.createBitmapByName("003_jpg",0,0,1,1); Page3.addChild(Jpg3.jpg);
-        var Jpg4:jpglist = new jpglist; Jpg4.jpg = this.createBitmapByName("004_jpg",0,0,1,1); Page3.addChild(Jpg4.jpg);
-        var Jpg5:jpglist = new jpglist; Jpg5.jpg = this.createBitmapByName("005_jpg",0,0,1,1); Page3.addChild(Jpg5.jpg);
-        var Jpg6:jpglist = new jpglist; Jpg6.jpg = this.createBitmapByName("006_jpg",0,0,1,1); Page3.addChild(Jpg6.jpg);
-        var Jpg7:jpglist = new jpglist; Jpg7.jpg = this.createBitmapByName("007_jpg",0,0,1,1); Page3.addChild(Jpg7.jpg);
-        var Jpg8:jpglist = new jpglist; Jpg8.jpg = this.createBitmapByName("008_jpg",0,0,1,1); Page3.addChild(Jpg8.jpg);
-        
-        changeanchor(Jpg1.jpg);changeanchor(Jpg5.jpg);
-        changeanchor(Jpg2.jpg);changeanchor(Jpg6.jpg);
-        changeanchor(Jpg3.jpg);changeanchor(Jpg7.jpg);
-        changeanchor(Jpg4.jpg);changeanchor(Jpg8.jpg);
+
+        var Jpg1:jpglist = this.createjpglist("001_jpg"); Page3.addChild(Jpg1.jpg);
+        var Jpg2:jpglist = this.createjpglist("002_jpg"); Page3.addChild(Jpg2.jpg);
+        var Jpg3:jpglist = this.createjpglist("003_jpg"); Page3.addChild(Jpg3.jpg);
+        var Jpg4:jpglist = this.createjpglist("004_jpg"); Page3.addChild(Jpg4.jpg);
+        var Jpg5:jpglist = this.createjpglist("005_jpg"); Page3.addChild(Jpg5.jpg);
+        var Jpg6:jpglist = this.createjpglist("006_jpg"); Page3.addChild(Jpg6.jpg);
+        var Jpg7:jpglist = this.createjpglist("007_jpg"); Page3.addChild(Jpg7.jpg);
+        var Jpg8:jpglist = this.createjpglist("008_jpg"); Page3.addChild(Jpg8.jpg); 
 
         Jpg1.form = Jpg8; Jpg1.next = Jpg2;
         Jpg2.form = Jpg1; Jpg2.next = Jpg3;
@@ -126,14 +115,22 @@ class Main extends egret.DisplayObjectContainer {
         Jpg7.form = Jpg6; Jpg7.next = Jpg8;
         Jpg8.form = Jpg7; Jpg8.next = Jpg1; 
 
-        var button_roll1:egret.Bitmap = this.createBitmapByName("codmw_png",320,1000,0.3,0.3);
-        changeanchor(button_roll1);
+        var text3_characters = this.createText(162,960,30);
+        text3_characters.textFlow = <Array<egret.ITextElement>>[
+          {text: "Games Characters", style: {"textColor": 0xffffff,"size": 35}}
+        ];
+        Page3.addChild(text3_characters);//定义文字 
+
+        var button_roll1:egret.Bitmap = this.createBitmapByName("left_png",140,545,0.3,0.3);
+        this.changeanchor(button_roll1);
         button_roll1.touchEnabled = true;
+        this.icon_Animation(button_roll1,2);
         Page3.addChild(button_roll1);
 
-        var button_roll2:egret.Bitmap = this.createBitmapByName("witcher_png",420,1000,0.3,0.3);
-        changeanchor(button_roll2);
+        var button_roll2:egret.Bitmap = this.createBitmapByName("right_png",500,545,0.3,0.3);
+        this.changeanchor(button_roll2);
         button_roll2.touchEnabled = true;
+        this.icon_Animation(button_roll2,3);
         Page3.addChild(button_roll2);
 
         this.Roll(Jpg1,Jpg2,Jpg3,Jpg4,Jpg5,Jpg6,Jpg7,Jpg8,button_roll1,button_roll2);
@@ -142,7 +139,7 @@ class Main extends egret.DisplayObjectContainer {
         var Page2:Page = new Page();
         this.addChild(Page2);
         Page2.touchEnabled = true;//定义页面2容器
-        pagemove(Page2);//页面具有滑动效果
+        this.pagemove(Page2);//页面具有滑动效果
 
         var sky2:egret.Bitmap = this.createsky("sce1_jpg",stageW,stageH);
         Page2.addChild(sky2);//绘制页面1背景
@@ -174,7 +171,7 @@ class Main extends egret.DisplayObjectContainer {
         var Page1:Page = new Page();
         this.addChild(Page1);
         Page1.touchEnabled = true;//定义页面1容器
-        pagemove(Page1);//页面具有滑动效果
+        this.pagemove(Page1);//页面具有滑动效果
        
         var sky1:egret.Bitmap = this.createsky("sce_jpg",stageW,stageH);
         Page1.addChild(sky1);//绘制页面1背景
@@ -182,11 +179,9 @@ class Main extends egret.DisplayObjectContainer {
         var Mask1 = this.createMask(0,238,stageW,172);
         Page1.addChild(Mask1);//定义黑框1
 
-        var icon_button1_1:egret.Bitmap = this.createBitmapByName("umbra_png",75,325,0.4,0.4);
-        Page1.addChild(icon_button1_1);
-        changescale(icon_button1_1,icon_button1_1.scaleX,icon_button1_1.scaleY);
-        icon_button1_1.touchEnabled = true;
-        icon_button1_1.addEventListener(egret.TouchEvent.TOUCH_TAP, onScroll1, this);//定义标签(unbra)按钮
+        var icon1_1:egret.Bitmap = this.createBitmapByName("umbra_png",75,325,0.4,0.4);
+        Page1.addChild(icon1_1);
+        this.changescale(icon1_1,icon1_1.scaleX,icon1_1.scaleY);//定义标签(unbra)logo
 
         var text1_1 = this.createText(1000,270,35);
         text1_1.textFlow = <Array<egret.ITextElement>>[
@@ -196,16 +191,15 @@ class Main extends egret.DisplayObjectContainer {
         , {text:"\n"}
         , {text: "数字媒体技术140811班25号", style: {"textColor": 0xffffff, "size": 30}}
         ];
-        Page1.addChild(text1_1);//定义文字
+        Page1.addChild(text1_1);
+        this.onScroll(text1_1,270,500);//定义文字
     
         var Mask2 = this.createMask(0,443,stageW,172);
         Page1.addChild(Mask2);//定义黑框2
 
-        var icon_button1_2:egret.Bitmap = this.createBitmapByName("witcher_png",70,530,0.5,0.5);
-        Page1.addChild(icon_button1_2);
-        changescale(icon_button1_2,icon_button1_2.scaleX,icon_button1_2.scaleY);
-        icon_button1_2.touchEnabled = true;
-        icon_button1_2.addEventListener(egret.TouchEvent.TOUCH_TAP, onScroll2, this);//定义标签(witcher)按钮
+        var icon1_2:egret.Bitmap = this.createBitmapByName("witcher_png",70,530,0.5,0.5);
+        Page1.addChild(icon1_2);
+        this.changescale(icon1_2,icon1_2.scaleX,icon1_2.scaleY);//定义标签(witcher)logo
         
         var text1_2 = this.createText(1000,455,35);
         text1_2.textFlow = <Array<egret.ITextElement>>[
@@ -217,16 +211,15 @@ class Main extends egret.DisplayObjectContainer {
         , {text:"\n"}
         , {text: "微信：ServantBrea", style: {"textColor": 0xffffff, "size": 30}}
         ];
-        Page1.addChild(text1_2);//定义文字
+        Page1.addChild(text1_2);
+        this.onScroll(text1_2,455,1000);//定义文字
 
         var Mask3 = this.createMask(0,648,stageW,172);
         Page1.addChild(Mask3);//定义黑框3
 
-        var icon_button1_3:egret.Bitmap = this.createBitmapByName("codmw_png",70,735,0.35,0.35);
-        Page1.addChild(icon_button1_3);
-        changescale(icon_button1_3,icon_button1_3.scaleX,icon_button1_3.scaleY);
-        icon_button1_3.touchEnabled = true;
-        icon_button1_3.addEventListener(egret.TouchEvent.TOUCH_TAP, onScroll3, this);//定义标签(witcher)按钮
+        var icon1_3:egret.Bitmap = this.createBitmapByName("codmw_png",70,735,0.35,0.35);
+        Page1.addChild(icon1_3);
+        this.changescale(icon1_3,icon1_3.scaleX,icon1_3.scaleY);//定义标签(witcher)logo
         
         var text1_3 = this.createText(1000,660,35);
         text1_3.textFlow = <Array<egret.ITextElement>>[
@@ -238,16 +231,15 @@ class Main extends egret.DisplayObjectContainer {
         , {text:"\n"}
         , {text: "剩余：看新闻，电影，外国电视剧", style: {"textColor": 0xffffff, "size": 30}}
         ];
-        Page1.addChild(text1_3);//定义文字
+        Page1.addChild(text1_3);
+        this.onScroll(text1_3,660,1500);//定义文字
         
         var Mask4 = this.createMask(0,853,stageW,172);
         Page1.addChild(Mask4);//定义黑框4 
 
-        var icon_button1_4:egret.Bitmap = this.createBitmapByName("teos_png",70,940,0.35,0.35);
-        Page1.addChild(icon_button1_4);
-        changescale(icon_button1_4,icon_button1_4.scaleX,icon_button1_4.scaleY);
-        icon_button1_4.touchEnabled = true;
-        icon_button1_4.addEventListener(egret.TouchEvent.TOUCH_TAP, onScroll4, this);//定义标签(witcher)按钮
+        var icon1_4:egret.Bitmap = this.createBitmapByName("teos_png",70,940,0.35,0.35);
+        Page1.addChild(icon1_4);
+        this.changescale(icon1_4,icon1_4.scaleX,icon1_4.scaleY);//定义标签(witcher)logo
         
         var text1_4 = this.createText(1000,865,35);
         text1_4.textFlow = <Array<egret.ITextElement>>[
@@ -259,7 +251,8 @@ class Main extends egret.DisplayObjectContainer {
         , {text:"\n"}
         , {text: "Java,Egret,Unreal4,Opengl", style: {"textColor": 0xffffff, "size": 30}}
         ];
-        Page1.addChild(text1_4);//定义文字
+        Page1.addChild(text1_4);
+        this.onScroll(text1_4,865,2000);//定义文字
 
 //页面（最上不变）
         var Pageall:Page = new Page();
@@ -294,8 +287,13 @@ class Main extends egret.DisplayObjectContainer {
         // Get asynchronously a json configuration file according to name keyword. As for the property of name please refer to the configuration file of resources/resource.json.
         RES.getResAsync("description_json", this.startAnimation, this)//定义特殊文字显示
 
-        var icon_updown:egret.Bitmap = this.createBitmapByName("updown_png",310,1070,0.06,0.06);
-        Pageall.addChild(icon_updown);   
+        var icon_up:egret.Bitmap = this.createBitmapByName("up_png",300,1060,0.3,0.3);
+        Pageall.addChild(icon_up); 
+        this.icon_Animation(icon_up,0);  
+
+        var icon_down:egret.Bitmap = this.createBitmapByName("down_png",330,1040,0.3,0.3);
+        Pageall.addChild(icon_down);
+        this.icon_Animation(icon_down,1);
         
         //音乐按钮
         var music:egret.Sound = RES.getRes("ah_mp3");
@@ -306,21 +304,13 @@ class Main extends egret.DisplayObjectContainer {
 
         var icon_music:egret.Bitmap = this.createBitmapByName("music_png",580,1080,0.5,0.5);
         Pageall.addChild(icon_music);
-        changeanchor(icon_music);
+        this.changeanchor(icon_music);
         icon_music.touchEnabled = true;
 
         icon_music.addEventListener(egret.TouchEvent.TOUCH_TAP, changeAnim, this);
         icon_music.addEventListener(egret.TouchEvent.ENTER_FRAME, if_rotation, this);         
 
-//各种事件内函数
-        function changescale(icon:egret.Bitmap,sX:number,sY:number):void {
-              var n = 0;
-              changeanchor(icon);
-              icon.addEventListener( egret.Event.ENTER_FRAME, ( evt:egret.Event )=>{
-              icon.scaleX = icon.scaleY = 0.5*sX + 0.5*sY* Math.abs( Math.sin( n += Main.STEP_SCALE ) );
-              },this);             /// 仅缩放，缩放范围
-        }//自身放大缩小
-        
+//各种事件/CreateGameScene内函数     
         function changeAnim(e: egret.TouchEvent): void {
               Anim_point = (Anim_point + 1 ) % 2;
               switch (Anim_point) {
@@ -351,36 +341,62 @@ class Main extends egret.DisplayObjectContainer {
                case AnimModes.Anim_1 : music.close();
                     break;
             }        
-        }//是否播放音乐
-
-        function onScroll1(e: egret.TouchEvent): void {
-              egret.Tween.get(text1_1).to( {x:180,y:270}, 300, egret.Ease.sineIn );
-        }//点击umbra的缓动效果
-
-        function onScroll2(e: egret.TouchEvent): void {
-              egret.Tween.get(text1_2).to( {x:180,y:455}, 300, egret.Ease.sineIn );
-        }//点击witcher的缓动效果
-
-        function onScroll3(e: egret.TouchEvent): void {
-              egret.Tween.get(text1_3).to( {x:180,y:660}, 300, egret.Ease.sineIn );
-        }//点击codmw的缓动效果
-
-        function onScroll4(e: egret.TouchEvent): void {
-              egret.Tween.get(text1_4).to( {x:180,y:865}, 300, egret.Ease.sineIn );
-        }//点击teos 的缓动效果
-
-        function pagemove(p:Page):void {
-             p.addEventListener(egret.TouchEvent.TOUCH_BEGIN, p.mouseDown, p);
-             p.addEventListener(egret.TouchEvent.TOUCH_END, p.mouseUp, p);            
-        }//页面翻动   
-
-        function changeanchor(icon:egret.Bitmap):void {
-            icon.anchorOffsetX = icon.width/2;
-            icon.anchorOffsetY = icon.height/2;//改变锚点位置
-        }      
+        }//是否播放音乐                
     }
 
-//各种自定义函数
+//各种自定义/private函数
+    private createjpglist(filename:string):jpglist {
+        var Jpg:jpglist = new jpglist;
+        Jpg.jpg = this.createBitmapByName(filename,0,0,1,1);
+        this.changeanchor(Jpg.jpg);
+        return Jpg;
+    }//建立图链表节点
+
+    private icon_Animation(icon:egret.Bitmap,mode:number):void {
+        var len = 40;
+        icon_move();
+        function icon_move() {
+            switch (mode) {
+                case 0 : { egret.Tween.get(icon).wait(500)
+                                                .to({x:icon.x,y:icon.y-len,"alpha":0},1400,egret.Ease.sineIn)
+                                                .to({x:icon.x,y:icon.y,"alpha":1},0,egret.Ease.sineIn).call(icon_move); 
+                          break;}
+                case 1 : { egret.Tween.get(icon).wait(500)
+                                                .to({x:icon.x,y:icon.y+len,"alpha":0},1400,egret.Ease.sineIn)
+                                                .to({x:icon.x,y:icon.y,"alpha":1},0,egret.Ease.sineIn).call(icon_move); 
+                          break;}
+                case 2 : { egret.Tween.get(icon).to({x:icon.x-len,y:icon.y,"alpha":0},1400,egret.Ease.sineIn)
+                                                .to({x:icon.x,y:icon.y,"alpha":1},0,egret.Ease.sineIn).call(icon_move); 
+                          break;}
+                case 3 : { egret.Tween.get(icon).to({x:icon.x+len,y:icon.y,"alpha":0},1400,egret.Ease.sineIn)
+                                                .to({x:icon.x,y:icon.y,"alpha":1},0,egret.Ease.sineIn).call(icon_move); 
+                          break;}
+            }
+        } 
+    }//标签动画
+
+    private onScroll(text:egret.TextField,iny:number,time:number): void {
+        egret.Tween.get(text).wait(time).to( {x:180,y:iny}, 300, egret.Ease.sineIn );
+    }//文字的缓动出现效果
+
+    private changescale(icon:egret.Bitmap,sX:number,sY:number):void {
+        var n = 0;
+        this.changeanchor(icon);
+        icon.addEventListener( egret.Event.ENTER_FRAME, ( evt:egret.Event )=>{
+        icon.scaleX = icon.scaleY = 0.5*sX + 0.5*sY* Math.abs( Math.sin( n += Main.STEP_SCALE ) );
+        },this);             /// 仅缩放，缩放范围
+    }//自身放大缩小
+
+    private pagemove(p:Page):void {
+        p.addEventListener(egret.TouchEvent.TOUCH_BEGIN, p.mouseDown, p);
+        p.addEventListener(egret.TouchEvent.TOUCH_END, p.mouseUp, p);            
+    }//页面翻动 
+
+    private changeanchor(icon:egret.Bitmap):void {
+        icon.anchorOffsetX = icon.width/2;
+        icon.anchorOffsetY = icon.height/2;//改变锚点位置
+    }//改变锚点
+
     private Roll(p1:jpglist,p2:jpglist,p3:jpglist,p4:jpglist,p5:jpglist,p6:jpglist,p7:jpglist,p8:jpglist,
                  b1:egret.Bitmap,b2:egret.Bitmap){
         var po1 = this.makepoint(320,568);
@@ -389,19 +405,25 @@ class Main extends egret.DisplayObjectContainer {
         var po3_1 = this.makepoint(148,568);
         var po3_2 = this.makepoint(492,568);
 
-        set(p1,po1,1,5);
-        set(p2,po2_1,0.9,4);
-        set(p8,po2_2,0.9,4);
-        set(p3,po3_1,0.8,3);
-        set(p7,po3_2,0.8,3);
-        set(p4,po2_1,0.7,2);
-        set(p6,po2_2,0.7,2);
-        set(p5,po1,0.6,1);
-
-        b1.addEventListener(egret.TouchEvent.TOUCH_TAP,goroll1,this);
-        b2.addEventListener(egret.TouchEvent.TOUCH_TAP,goroll2,this);
-
-        function goroll1(e: egret.TouchEvent):void {
+        this.set(p1,po1,1,5);
+        this.set(p2,po2_1,0.9,4);
+        this.set(p8,po2_2,0.9,4);
+        this.set(p3,po3_1,0.8,3);
+        this.set(p7,po3_2,0.8,3);
+        this.set(p4,po2_1,0.7,2);
+        this.set(p6,po2_2,0.7,2);
+        this.set(p5,po1,0.6,1);
+        /*
+        var timemode = 0;
+        var timer:egret.Timer = new egret.Timer(1000,0);//注册事件侦听器
+        timer.addEventListener(egret.TimerEvent.TIMER,gorollleft,this);
+        timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE,gorollright,this);
+        timer.start();
+        */
+        b1.addEventListener(egret.TouchEvent.TOUCH_TAP,gorollleft,this);
+        b2.addEventListener(egret.TouchEvent.TOUCH_TAP,gorollright,this);
+        
+        function gorollleft(/*e: egret.TouchEvent*/):void {
             egret.Tween.get(p8.jpg).to({x:po1.x,y:po1.y,scaleX:0.7*1,scaleY:0.7*1},300,egret.Ease.sineIn);
             p8.jpg.parent.setChildIndex(p8.jpg,5);
 
@@ -433,10 +455,10 @@ class Main extends egret.DisplayObjectContainer {
             p5 = p5.form;
             p6 = p6.form;
             p7 = p7.form;
-            p8 = p8.form;        
+            p8 = p8.form;       
         }
 
-        function goroll2(e: egret.TouchEvent):void {
+        function gorollright(/*e: egret.TouchEvent*/):void {
             egret.Tween.get(p2.jpg).to({x:po1.x,y:po1.y,scaleX:0.7*1,scaleY:0.7*1},300,egret.Ease.sineIn);
             p2.jpg.parent.setChildIndex(p2.jpg,5);
 
@@ -470,15 +492,15 @@ class Main extends egret.DisplayObjectContainer {
             p7 = p7.next;
             p8 = p8.next;        
         }
-
-        function set(pic:jpglist,po:egret.Point,s:number,d:number):void {
-            pic.jpg.x = po.x;
-            pic.jpg.y = po.y;
-            pic.jpg.scaleX = 0.7*s;
-            pic.jpg.scaleY = 0.7*s;
-            pic.jpg.parent.addChildAt(pic.jpg,d);
-        }//以某点设置某图位置
     }//图片的滚动效果
+
+    private set(pic:jpglist,po:egret.Point,s:number,d:number):void {
+        pic.jpg.x = po.x;
+        pic.jpg.y = po.y;
+        pic.jpg.scaleX = 0.7*s;
+        pic.jpg.scaleY = 0.7*s;
+        pic.jpg.parent.addChildAt(pic.jpg,d);
+    }//以某点设置某图位置
 
     private makepoint(x:number,y:number):egret.Point {
         var point =new egret.Point(x,y);
@@ -486,23 +508,23 @@ class Main extends egret.DisplayObjectContainer {
     }//制造点
 
     private pictureplay(a:egret.Bitmap,b:egret.Bitmap,c:egret.Bitmap):void {    
-            var count = 0;  
-            a.alpha = 0; b.alpha = 0; c.alpha = 0;
-            var change:Function = function () {
-               var t:egret.Bitmap;
-               if(count < 3) {count++;} else{count = 1;}
-               switch (count){
-                   case 1: t = a;break;
-                   case 2: t = b;break;
-                   case 3: t = c;break;
-               }
-               var tw = egret.Tween.get(t);
-               tw.to({"alpha": 1}, 1000);
-               tw.wait(2000);
-               tw.to({"alpha": 0}, 1000);
-               tw.call(change, t);
-            };   
-            change();
+        var count = 0;  
+        a.alpha = 0; b.alpha = 0; c.alpha = 0;
+        var change:Function = function () {
+        var t:egret.Bitmap;
+        if(count < 3) {count++;} else{count = 1;}
+            switch (count){
+                case 1: t = a;break;
+                case 2: t = b;break;
+                case 3: t = c;break;
+            }
+            var tw = egret.Tween.get(t);
+            tw.to({"alpha": 1}, 1000);
+            tw.wait(2000);
+            tw.to({"alpha": 0}, 1000);
+            tw.call(change, t);
+        };   
+        change();
     }//图片变换
   
     private createBitmapByName(name:string,x:number,y:number,xs:number,ys:number):egret.Bitmap {
