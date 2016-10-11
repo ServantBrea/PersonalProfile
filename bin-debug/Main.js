@@ -35,16 +35,12 @@ var Main = (function (_super) {
     var d = __define,c=Main,p=c.prototype;
     p.onAddToStage = function (event) {
         //设置加载进度界面
-        //Config to load process interface
         this.loadingView = new LoadingUI();
         this.stage.addChild(this.loadingView);
         //初始化Resource资源加载库
-        //initiate Resource loading library
         RES.addEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.loadConfig("resource/default.res.json", "resource/");
     };
-    // 配置文件加载完成,开始预加载preload资源组。
-    // configuration file loading is completed, start to pre-load the preload resource group    
     p.onConfigComplete = function (event) {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
@@ -52,9 +48,7 @@ var Main = (function (_super) {
         RES.addEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
         RES.addEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError, this);
         RES.loadGroup("preload");
-    };
-    // preload资源组加载完成
-    // Preload resource group is loaded 
+    }; // 配置文件加载完成,开始预加载preload资源组。
     p.onResourceLoadComplete = function (event) {
         if (event.groupName == "preload") {
             this.stage.removeChild(this.loadingView);
@@ -64,31 +58,23 @@ var Main = (function (_super) {
             RES.removeEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError, this);
             this.createGameScene1();
         }
-    };
-    // 资源组加载出错
-    //  The resource group loading failed 
+    }; // preload资源组加载完成
     p.onItemLoadError = function (event) {
         console.warn("Url:" + event.resItem.url + " has failed to load");
-    };
-    // 资源组加载出错
-    //  The resource group loading failed
+    }; // 资源组加载出错
     p.onResourceLoadError = function (event) {
         //TODO
         console.warn("Group:" + event.groupName + " has failed to load");
         //忽略加载失败的项目
-        //Ignore the loading failed projects
         this.onResourceLoadComplete(event);
-    };
-    // preload资源组加载进度
-    // Loading process of preload resource group
+    }; // 资源组加载出错
     p.onResourceProgress = function (event) {
         if (event.groupName == "preload") {
             this.loadingView.setProgress(event.itemsLoaded, event.itemsTotal);
         }
-    };
+    }; // preload资源组加载进度
     //构建整个场景
-    // 创建游戏场景
-    // Create a game scene         
+    // 创建游戏场景       
     p.createGameScene1 = function () {
         var stageW = this.stage.stageWidth;
         var stageH = this.stage.stageHeight; //获取舞台长宽
@@ -98,7 +84,64 @@ var Main = (function (_super) {
         Page3.touchEnabled = true; //定义页面3容器
         pagemove(Page3); //页面具有滑动效果
         var sky3 = this.createsky("sce2_jpg", stageW, stageH);
-        Page3.addChild(sky3); //绘制页面3背景      
+        Page3.addChildAt(sky3, 0); //绘制页面3背景 
+        var Jpg1 = new jpglist;
+        Jpg1.jpg = this.createBitmapByName("001_jpg", 0, 0, 1, 1);
+        Page3.addChild(Jpg1.jpg);
+        var Jpg2 = new jpglist;
+        Jpg2.jpg = this.createBitmapByName("002_jpg", 0, 0, 1, 1);
+        Page3.addChild(Jpg2.jpg);
+        var Jpg3 = new jpglist;
+        Jpg3.jpg = this.createBitmapByName("003_jpg", 0, 0, 1, 1);
+        Page3.addChild(Jpg3.jpg);
+        var Jpg4 = new jpglist;
+        Jpg4.jpg = this.createBitmapByName("004_jpg", 0, 0, 1, 1);
+        Page3.addChild(Jpg4.jpg);
+        var Jpg5 = new jpglist;
+        Jpg5.jpg = this.createBitmapByName("005_jpg", 0, 0, 1, 1);
+        Page3.addChild(Jpg5.jpg);
+        var Jpg6 = new jpglist;
+        Jpg6.jpg = this.createBitmapByName("006_jpg", 0, 0, 1, 1);
+        Page3.addChild(Jpg6.jpg);
+        var Jpg7 = new jpglist;
+        Jpg7.jpg = this.createBitmapByName("007_jpg", 0, 0, 1, 1);
+        Page3.addChild(Jpg7.jpg);
+        var Jpg8 = new jpglist;
+        Jpg8.jpg = this.createBitmapByName("008_jpg", 0, 0, 1, 1);
+        Page3.addChild(Jpg8.jpg);
+        changeanchor(Jpg1.jpg);
+        changeanchor(Jpg5.jpg);
+        changeanchor(Jpg2.jpg);
+        changeanchor(Jpg6.jpg);
+        changeanchor(Jpg3.jpg);
+        changeanchor(Jpg7.jpg);
+        changeanchor(Jpg4.jpg);
+        changeanchor(Jpg8.jpg);
+        Jpg1.form = Jpg8;
+        Jpg1.next = Jpg2;
+        Jpg2.form = Jpg1;
+        Jpg2.next = Jpg3;
+        Jpg3.form = Jpg2;
+        Jpg3.next = Jpg4;
+        Jpg4.form = Jpg3;
+        Jpg4.next = Jpg5;
+        Jpg5.form = Jpg4;
+        Jpg5.next = Jpg6;
+        Jpg6.form = Jpg5;
+        Jpg6.next = Jpg7;
+        Jpg7.form = Jpg6;
+        Jpg7.next = Jpg8;
+        Jpg8.form = Jpg7;
+        Jpg8.next = Jpg1;
+        var button_roll1 = this.createBitmapByName("codmw_png", 320, 1000, 0.3, 0.3);
+        changeanchor(button_roll1);
+        button_roll1.touchEnabled = true;
+        Page3.addChild(button_roll1);
+        var button_roll2 = this.createBitmapByName("witcher_png", 420, 1000, 0.3, 0.3);
+        changeanchor(button_roll2);
+        button_roll2.touchEnabled = true;
+        Page3.addChild(button_roll2);
+        this.Roll(Jpg1, Jpg2, Jpg3, Jpg4, Jpg5, Jpg6, Jpg7, Jpg8, button_roll1, button_roll2);
         //页面2               
         var Page2 = new Page();
         this.addChild(Page2);
@@ -106,6 +149,25 @@ var Main = (function (_super) {
         pagemove(Page2); //页面具有滑动效果
         var sky2 = this.createsky("sce1_jpg", stageW, stageH);
         Page2.addChild(sky2); //绘制页面1背景
+        var picture1_1 = this.createBitmapByName("g1_jpg", 0, 205, 1, 1);
+        Page2.addChild(picture1_1);
+        var picture1_2 = this.createBitmapByName("g2_jpg", 0, 205, 1, 1);
+        Page2.addChild(picture1_2);
+        var picture1_3 = this.createBitmapByName("g3_jpg", 0, 205, 1, 1);
+        Page2.addChild(picture1_3);
+        this.pictureplay(picture1_1, picture1_2, picture1_3);
+        var picture2_1 = this.createBitmapByName("g4_jpg", 0, 625, 1, 1);
+        Page2.addChild(picture2_1);
+        var picture2_2 = this.createBitmapByName("g5_jpg", 0, 625, 1, 1);
+        Page2.addChild(picture2_2);
+        var picture2_3 = this.createBitmapByName("g6_jpg", 0, 625, 1, 1);
+        Page2.addChild(picture2_3);
+        this.pictureplay(picture2_1, picture2_2, picture2_3);
+        var text2_1 = this.createText(200, 576, 35);
+        text2_1.textFlow = [
+            { text: "Video Games", style: { "textColor": 0xffffff, "size": 35 } }
+        ];
+        Page2.addChild(text2_1); //定义文字
         //页面1
         var Page1 = new Page();
         this.addChild(Page1);
@@ -115,29 +177,29 @@ var Main = (function (_super) {
         Page1.addChild(sky1); //绘制页面1背景
         var Mask1 = this.createMask(0, 238, stageW, 172);
         Page1.addChild(Mask1); //定义黑框1
-        var icon_button1 = this.createBitmapByName("umbra_png", 75, 325, 0.4, 0.4);
-        Page1.addChild(icon_button1);
-        changescale(icon_button1, icon_button1.scaleX, icon_button1.scaleY);
-        icon_button1.touchEnabled = true;
-        icon_button1.addEventListener(egret.TouchEvent.TOUCH_TAP, onScroll1, this); //定义标签(unbra)按钮
-        var text1 = this.createText(1000, 270, 35);
-        text1.textFlow = [
+        var icon_button1_1 = this.createBitmapByName("umbra_png", 75, 325, 0.4, 0.4);
+        Page1.addChild(icon_button1_1);
+        changescale(icon_button1_1, icon_button1_1.scaleX, icon_button1_1.scaleY);
+        icon_button1_1.touchEnabled = true;
+        icon_button1_1.addEventListener(egret.TouchEvent.TOUCH_TAP, onScroll1, this); //定义标签(unbra)按钮
+        var text1_1 = this.createText(1000, 270, 35);
+        text1_1.textFlow = [
             { text: "个人身份", style: { "textColor": 0x0000ff, "size": 35 } },
             { text: "\n" },
             { text: "北京工业大学信息学部", style: { "textColor": 0xffffff, "size": 30 } },
             { text: "\n" },
             { text: "数字媒体技术140811班25号", style: { "textColor": 0xffffff, "size": 30 } }
         ];
-        Page1.addChild(text1); //定义文字
+        Page1.addChild(text1_1); //定义文字
         var Mask2 = this.createMask(0, 443, stageW, 172);
         Page1.addChild(Mask2); //定义黑框2
-        var icon_button2 = this.createBitmapByName("witcher_png", 70, 530, 0.5, 0.5);
-        Page1.addChild(icon_button2);
-        changescale(icon_button2, icon_button2.scaleX, icon_button2.scaleY);
-        icon_button2.touchEnabled = true;
-        icon_button2.addEventListener(egret.TouchEvent.TOUCH_TAP, onScroll2, this); //定义标签(witcher)按钮
-        var text2 = this.createText(1000, 455, 35);
-        text2.textFlow = [
+        var icon_button1_2 = this.createBitmapByName("witcher_png", 70, 530, 0.5, 0.5);
+        Page1.addChild(icon_button1_2);
+        changescale(icon_button1_2, icon_button1_2.scaleX, icon_button1_2.scaleY);
+        icon_button1_2.touchEnabled = true;
+        icon_button1_2.addEventListener(egret.TouchEvent.TOUCH_TAP, onScroll2, this); //定义标签(witcher)按钮
+        var text1_2 = this.createText(1000, 455, 35);
+        text1_2.textFlow = [
             { text: "联系信息", style: { "textColor": 0x0000ff, "size": 35 } },
             { text: "\n" },
             { text: "手机：13687886372", style: { "textColor": 0xffffff, "size": 30 } },
@@ -146,11 +208,43 @@ var Main = (function (_super) {
             { text: "\n" },
             { text: "微信：ServantBrea", style: { "textColor": 0xffffff, "size": 30 } }
         ];
-        Page1.addChild(text2); //定义文字
+        Page1.addChild(text1_2); //定义文字
         var Mask3 = this.createMask(0, 648, stageW, 172);
         Page1.addChild(Mask3); //定义黑框3
+        var icon_button1_3 = this.createBitmapByName("codmw_png", 70, 735, 0.35, 0.35);
+        Page1.addChild(icon_button1_3);
+        changescale(icon_button1_3, icon_button1_3.scaleX, icon_button1_3.scaleY);
+        icon_button1_3.touchEnabled = true;
+        icon_button1_3.addEventListener(egret.TouchEvent.TOUCH_TAP, onScroll3, this); //定义标签(witcher)按钮
+        var text1_3 = this.createText(1000, 660, 35);
+        text1_3.textFlow = [
+            { text: "个人爱好", style: { "textColor": 0x0000ff, "size": 35 } },
+            { text: "\n" },
+            { text: "主要：大型单机游戏", style: { "textColor": 0xffffff, "size": 30 } },
+            { text: "\n" },
+            { text: "其次：看漫画，动漫，学制作游戏", style: { "textColor": 0xffffff, "size": 30 } },
+            { text: "\n" },
+            { text: "剩余：看新闻，电影，外国电视剧", style: { "textColor": 0xffffff, "size": 30 } }
+        ];
+        Page1.addChild(text1_3); //定义文字
         var Mask4 = this.createMask(0, 853, stageW, 172);
         Page1.addChild(Mask4); //定义黑框4 
+        var icon_button1_4 = this.createBitmapByName("teos_png", 70, 940, 0.35, 0.35);
+        Page1.addChild(icon_button1_4);
+        changescale(icon_button1_4, icon_button1_4.scaleX, icon_button1_4.scaleY);
+        icon_button1_4.touchEnabled = true;
+        icon_button1_4.addEventListener(egret.TouchEvent.TOUCH_TAP, onScroll4, this); //定义标签(witcher)按钮
+        var text1_4 = this.createText(1000, 865, 35);
+        text1_4.textFlow = [
+            { text: "最近正忙", style: { "textColor": 0x0000ff, "size": 35 } },
+            { text: "\n" },
+            { text: "The Witcher 3,The last of us", style: { "textColor": 0xffffff, "size": 30 } },
+            { text: "\n" },
+            { text: "Uncharted,One pieces,GTA5", style: { "textColor": 0xffffff, "size": 30 } },
+            { text: "\n" },
+            { text: "Java,Egret,Unreal4,Opengl", style: { "textColor": 0xffffff, "size": 30 } }
+        ];
+        Page1.addChild(text1_4); //定义文字
         //页面（最上不变）
         var Pageall = new Page();
         this.addChild(Pageall); //页面容器最上的定义
@@ -159,8 +253,8 @@ var Main = (function (_super) {
         topMask.graphics.drawRect(0, 0, stageW, 205);
         topMask.graphics.endFill();
         Pageall.addChild(topMask); //定义黑框（标题）
-        var icon1 = this.createBitmapByName("egret_icon_png", 54, 12, 1, 1);
-        Pageall.addChild(icon1); //定义标签（白鹭）        
+        var icon_egret = this.createBitmapByName("egret_icon_png", 54, 12, 1, 1);
+        Pageall.addChild(icon_egret); //定义标签（白鹭）        
         var toptext = this.createText(310, 60, 60);
         toptext.textColor = 0xffffff;
         toptext.text = "周景城";
@@ -188,16 +282,14 @@ var Main = (function (_super) {
         var Anim_point = AnimModes.Anim_0; //定义按钮模式
         var icon_music = this.createBitmapByName("music_png", 580, 1080, 0.5, 0.5);
         Pageall.addChild(icon_music);
-        icon_music.anchorOffsetX = icon_music.width / 2;
-        icon_music.anchorOffsetY = icon_music.height / 2; //改变锚点位置
+        changeanchor(icon_music);
         icon_music.touchEnabled = true;
         icon_music.addEventListener(egret.TouchEvent.TOUCH_TAP, changeAnim, this);
         icon_music.addEventListener(egret.TouchEvent.ENTER_FRAME, if_rotation, this);
-        //各种事件函数
+        //各种事件内函数
         function changescale(icon, sX, sY) {
             var n = 0;
-            icon.anchorOffsetX = icon.width / 2;
-            icon.anchorOffsetY = icon.height / 2; //改变锚点位置
+            changeanchor(icon);
             icon.addEventListener(egret.Event.ENTER_FRAME, function (evt) {
                 icon.scaleX = icon.scaleY = 0.5 * sX + 0.5 * sY * Math.abs(Math.sin(n += Main.STEP_SCALE));
             }, this); /// 仅缩放，缩放范围
@@ -234,21 +326,141 @@ var Main = (function (_super) {
                     music.close();
                     break;
             }
-        } //是否旋转
+        } //是否播放音乐
         function onScroll1(e) {
-            egret.Tween.get(text1).to({ x: 180, y: 270 }, 300, egret.Ease.sineIn);
+            egret.Tween.get(text1_1).to({ x: 180, y: 270 }, 300, egret.Ease.sineIn);
         } //点击umbra的缓动效果
         function onScroll2(e) {
-            egret.Tween.get(text2).to({ x: 180, y: 455 }, 300, egret.Ease.sineIn);
+            egret.Tween.get(text1_2).to({ x: 180, y: 455 }, 300, egret.Ease.sineIn);
         } //点击witcher的缓动效果
+        function onScroll3(e) {
+            egret.Tween.get(text1_3).to({ x: 180, y: 660 }, 300, egret.Ease.sineIn);
+        } //点击codmw的缓动效果
+        function onScroll4(e) {
+            egret.Tween.get(text1_4).to({ x: 180, y: 865 }, 300, egret.Ease.sineIn);
+        } //点击teos 的缓动效果
         function pagemove(p) {
             p.addEventListener(egret.TouchEvent.TOUCH_BEGIN, p.mouseDown, p);
             p.addEventListener(egret.TouchEvent.TOUCH_END, p.mouseUp, p);
-        } //页面翻动         
+        } //页面翻动   
+        function changeanchor(icon) {
+            icon.anchorOffsetX = icon.width / 2;
+            icon.anchorOffsetY = icon.height / 2; //改变锚点位置
+        }
     };
     //各种自定义函数
-    //根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
-    //Create a Bitmap object according to name keyword.As for the property of name please refer to the configuration file of resources/resource.json.    
+    p.Roll = function (p1, p2, p3, p4, p5, p6, p7, p8, b1, b2) {
+        var po1 = this.makepoint(320, 568);
+        var po2_1 = this.makepoint(234, 568);
+        var po2_2 = this.makepoint(406, 568);
+        var po3_1 = this.makepoint(148, 568);
+        var po3_2 = this.makepoint(492, 568);
+        set(p1, po1, 1, 5);
+        set(p2, po2_1, 0.9, 4);
+        set(p8, po2_2, 0.9, 4);
+        set(p3, po3_1, 0.8, 3);
+        set(p7, po3_2, 0.8, 3);
+        set(p4, po2_1, 0.7, 2);
+        set(p6, po2_2, 0.7, 2);
+        set(p5, po1, 0.6, 1);
+        b1.addEventListener(egret.TouchEvent.TOUCH_TAP, goroll1, this);
+        b2.addEventListener(egret.TouchEvent.TOUCH_TAP, goroll2, this);
+        function goroll1(e) {
+            egret.Tween.get(p8.jpg).to({ x: po1.x, y: po1.y, scaleX: 0.7 * 1, scaleY: 0.7 * 1 }, 300, egret.Ease.sineIn);
+            p8.jpg.parent.setChildIndex(p8.jpg, 5);
+            egret.Tween.get(p1.jpg).to({ x: po2_1.x, y: po2_1.y, scaleX: 0.7 * 0.9, scaleY: 0.7 * 0.9 }, 300, egret.Ease.sineIn);
+            p1.jpg.parent.setChildIndex(p1.jpg, 4);
+            egret.Tween.get(p2.jpg).to({ x: po3_1.x, y: po3_1.y, scaleX: 0.7 * 0.8, scaleY: 0.7 * 0.8 }, 300, egret.Ease.sineIn);
+            p2.jpg.parent.setChildIndex(p2.jpg, 3);
+            egret.Tween.get(p3.jpg).to({ x: po2_1.x, y: po2_1.y, scaleX: 0.7 * 0.7, scaleY: 0.7 * 0.7 }, 300, egret.Ease.sineIn);
+            p3.jpg.parent.setChildIndex(p3.jpg, 2);
+            egret.Tween.get(p4.jpg).to({ x: po1.x, y: po1.y, scaleX: 0.7 * 0.6, scaleY: 0.7 * 0.6 }, 300, egret.Ease.sineIn);
+            p4.jpg.parent.setChildIndex(p4.jpg, 1);
+            egret.Tween.get(p5.jpg).to({ x: po2_2.x, y: po2_2.y, scaleX: 0.7 * 0.7, scaleY: 0.7 * 0.7 }, 300, egret.Ease.sineIn);
+            p5.jpg.parent.setChildIndex(p5.jpg, 2);
+            egret.Tween.get(p6.jpg).to({ x: po3_2.x, y: po3_2.y, scaleX: 0.7 * 0.8, scaleY: 0.7 * 0.8 }, 300, egret.Ease.sineIn);
+            p6.jpg.parent.setChildIndex(p6.jpg, 3);
+            egret.Tween.get(p7.jpg).to({ x: po2_2.x, y: po2_2.y, scaleX: 0.7 * 0.9, scaleY: 0.7 * 0.9 }, 300, egret.Ease.sineIn);
+            p7.jpg.parent.setChildIndex(p7.jpg, 4);
+            p1 = p1.form;
+            p2 = p2.form;
+            p3 = p3.form;
+            p4 = p4.form;
+            p5 = p5.form;
+            p6 = p6.form;
+            p7 = p7.form;
+            p8 = p8.form;
+        }
+        function goroll2(e) {
+            egret.Tween.get(p2.jpg).to({ x: po1.x, y: po1.y, scaleX: 0.7 * 1, scaleY: 0.7 * 1 }, 300, egret.Ease.sineIn);
+            p2.jpg.parent.setChildIndex(p2.jpg, 5);
+            egret.Tween.get(p3.jpg).to({ x: po2_1.x, y: po2_1.y, scaleX: 0.7 * 0.9, scaleY: 0.7 * 0.9 }, 300, egret.Ease.sineIn);
+            p3.jpg.parent.setChildIndex(p3.jpg, 4);
+            egret.Tween.get(p4.jpg).to({ x: po3_1.x, y: po3_1.y, scaleX: 0.7 * 0.8, scaleY: 0.7 * 0.8 }, 300, egret.Ease.sineIn);
+            p4.jpg.parent.setChildIndex(p4.jpg, 3);
+            egret.Tween.get(p5.jpg).to({ x: po2_1.x, y: po2_1.y, scaleX: 0.7 * 0.7, scaleY: 0.7 * 0.7 }, 300, egret.Ease.sineIn);
+            p5.jpg.parent.setChildIndex(p5.jpg, 2);
+            egret.Tween.get(p6.jpg).to({ x: po1.x, y: po1.y, scaleX: 0.7 * 0.6, scaleY: 0.7 * 0.6 }, 300, egret.Ease.sineIn);
+            p6.jpg.parent.setChildIndex(p6.jpg, 1);
+            egret.Tween.get(p7.jpg).to({ x: po2_2.x, y: po2_2.y, scaleX: 0.7 * 0.7, scaleY: 0.7 * 0.7 }, 300, egret.Ease.sineIn);
+            p7.jpg.parent.setChildIndex(p7.jpg, 2);
+            egret.Tween.get(p8.jpg).to({ x: po3_2.x, y: po3_2.y, scaleX: 0.7 * 0.8, scaleY: 0.7 * 0.8 }, 300, egret.Ease.sineIn);
+            p8.jpg.parent.setChildIndex(p8.jpg, 3);
+            egret.Tween.get(p1.jpg).to({ x: po2_2.x, y: po2_2.y, scaleX: 0.7 * 0.9, scaleY: 0.7 * 0.9 }, 300, egret.Ease.sineIn);
+            p1.jpg.parent.setChildIndex(p1.jpg, 4);
+            p1 = p1.next;
+            p2 = p2.next;
+            p3 = p3.next;
+            p4 = p4.next;
+            p5 = p5.next;
+            p6 = p6.next;
+            p7 = p7.next;
+            p8 = p8.next;
+        }
+        function set(pic, po, s, d) {
+            pic.jpg.x = po.x;
+            pic.jpg.y = po.y;
+            pic.jpg.scaleX = 0.7 * s;
+            pic.jpg.scaleY = 0.7 * s;
+            pic.jpg.parent.addChildAt(pic.jpg, d);
+        } //以某点设置某图位置
+    }; //图片的滚动效果
+    p.makepoint = function (x, y) {
+        var point = new egret.Point(x, y);
+        return point;
+    }; //制造点
+    p.pictureplay = function (a, b, c) {
+        var count = 0;
+        a.alpha = 0;
+        b.alpha = 0;
+        c.alpha = 0;
+        var change = function () {
+            var t;
+            if (count < 3) {
+                count++;
+            }
+            else {
+                count = 1;
+            }
+            switch (count) {
+                case 1:
+                    t = a;
+                    break;
+                case 2:
+                    t = b;
+                    break;
+                case 3:
+                    t = c;
+                    break;
+            }
+            var tw = egret.Tween.get(t);
+            tw.to({ "alpha": 1 }, 1000);
+            tw.wait(2000);
+            tw.to({ "alpha": 0 }, 1000);
+            tw.call(change, t);
+        };
+        change();
+    }; //图片变换
     p.createBitmapByName = function (name, x, y, xs, ys) {
         var result = new egret.Bitmap();
         var texture = RES.getRes(name);
@@ -258,7 +470,7 @@ var Main = (function (_super) {
         result.scaleX = xs;
         result.scaleY = ys;
         return result;
-    }; //加载图
+    }; //根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
     p.startAnimation = function (result) {
         var self = this;
         var parser = new egret.HtmlTextParser();
@@ -334,18 +546,19 @@ var Page = (function (_super) {
         if (this._touchStatus) {
             this.y = evt.stageY - this._distance.y;
             if (this.y < -500) {
-                egret.Tween.get(this).to({ x: 0, y: -1136 }, 400, egret.Ease.sineIn)
-                    .wait(300).to({ x: 0, y: 0 }, 100, egret.Ease.sineIn);
-                this.parent.addChildAt(this, 0);
+                egret.Tween.get(this).to({ x: 0, y: -1136 }, 300, egret.Ease.sineIn)
+                    .call(down).to({ x: 0, y: 0 }, 100, egret.Ease.sineIn);
                 this.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.mouseMove, this);
             }
             if (this.y > 500) {
-                egret.Tween.get(this).to({ x: 0, y: -1136 }, 400, egret.Ease.sineIn)
-                    .wait(300).to({ x: 0, y: 0 }, 100, egret.Ease.sineIn);
-                this.parent.addChildAt(this, 0);
+                egret.Tween.get(this).to({ x: 0, y: 1136 }, 300, egret.Ease.sineIn)
+                    .call(down).to({ x: 0, y: 0 }, 100, egret.Ease.sineIn);
                 this.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.mouseMove, this);
             }
         }
+        function down() {
+            this.parent.addChildAt(this, 0);
+        } //容器深度置下           
     };
     p.mouseUp = function (evt) {
         this._touchStatus = false;
@@ -371,4 +584,12 @@ var AnimModes = (function () {
 }());
 egret.registerClass(AnimModes,'AnimModes');
  //按钮模式类
+var jpglist = (function () {
+    function jpglist() {
+    }
+    var d = __define,c=jpglist,p=c.prototype;
+    return jpglist;
+}());
+egret.registerClass(jpglist,'jpglist');
+ //图片类
 //# sourceMappingURL=Main.js.map

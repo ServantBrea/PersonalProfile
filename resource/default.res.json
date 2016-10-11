@@ -1,16 +1,11 @@
 {
 	"groups": [
 		{
-			"keys": "bg_jpg,egret_icon_png,description_json,sce_jpg,umbra_png,music_png,sce1_jpg,sce2_jpg,ah_mp3,updown_png,witcher_png",
+			"keys": "egret_icon_png,description_json,sce_jpg,umbra_png,music_png,sce1_jpg,sce2_jpg,ah_mp3,updown_png,witcher_png,codmw_png,teos_png,g1_jpg,g3_jpg,g2_jpg,g4_jpg,g5_jpg,g6_jpg,001_jpg,002_jpg,003_jpg,004_jpg,005_jpg,006_jpg,007_jpg,008_jpg",
 			"name": "preload"
 		}
 	],
 	"resources": [
-		{
-			"name": "bg_jpg",
-			"type": "image",
-			"url": "assets/bg.jpg"
-		},
 		{
 			"name": "egret_icon_png",
 			"type": "image",
@@ -60,6 +55,86 @@
 			"name": "witcher_png",
 			"type": "image",
 			"url": "assets/witcher.png"
+		},
+		{
+			"name": "codmw_png",
+			"type": "image",
+			"url": "assets/codmw.png"
+		},
+		{
+			"name": "teos_png",
+			"type": "image",
+			"url": "assets/teos.png"
+		},
+		{
+			"name": "g1_jpg",
+			"type": "image",
+			"url": "assets/g1.jpg"
+		},
+		{
+			"name": "g3_jpg",
+			"type": "image",
+			"url": "assets/g3.jpg"
+		},
+		{
+			"name": "g2_jpg",
+			"type": "image",
+			"url": "assets/g2.jpg"
+		},
+		{
+			"name": "g4_jpg",
+			"type": "image",
+			"url": "assets/g4.jpg"
+		},
+		{
+			"name": "g5_jpg",
+			"type": "image",
+			"url": "assets/g5.jpg"
+		},
+		{
+			"name": "g6_jpg",
+			"type": "image",
+			"url": "assets/g6.jpg"
+		},
+		{
+			"name": "001_jpg",
+			"type": "image",
+			"url": "assets/001.jpg"
+		},
+		{
+			"name": "002_jpg",
+			"type": "image",
+			"url": "assets/002.jpg"
+		},
+		{
+			"name": "003_jpg",
+			"type": "image",
+			"url": "assets/003.jpg"
+		},
+		{
+			"name": "004_jpg",
+			"type": "image",
+			"url": "assets/004.jpg"
+		},
+		{
+			"name": "005_jpg",
+			"type": "image",
+			"url": "assets/005.jpg"
+		},
+		{
+			"name": "006_jpg",
+			"type": "image",
+			"url": "assets/006.jpg"
+		},
+		{
+			"name": "007_jpg",
+			"type": "image",
+			"url": "assets/007.jpg"
+		},
+		{
+			"name": "008_jpg",
+			"type": "image",
+			"url": "assets/008.jpg"
 		}
 	]
 }
