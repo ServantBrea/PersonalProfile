@@ -300,7 +300,7 @@ class Main extends egret.DisplayObjectContainer {
         var musicChannel:egret.SoundChannel;
         var stop_time:number = 0;
         musicChannel = music.play(stop_time,0);//定义音乐
-        var Anim_point =AnimModes.Anim_0;//定义按钮模式
+        var Anim_point = AnimModes.Anim_0;//定义按钮模式
 
         var icon_music:egret.Bitmap = this.createBitmapByName("music_png",580,1080,0.5,0.5);
         Pageall.addChild(icon_music);
@@ -315,7 +315,7 @@ class Main extends egret.DisplayObjectContainer {
               Anim_point = (Anim_point + 1 ) % 2;
               switch (Anim_point) {
                   case AnimModes.Anim_0 : 
-                        musicChannel=music.play(stop_time,0);
+                        musicChannel = music.play(stop_time,0);
                         break;
                   case AnimModes.Anim_1 :
                         stop_time = musicChannel.position; 
@@ -503,7 +503,7 @@ class Main extends egret.DisplayObjectContainer {
     }//以某点设置某图位置
 
     private makepoint(x:number,y:number):egret.Point {
-        var point =new egret.Point(x,y);
+        var point = new egret.Point(x,y);
         return point;
     }//制造点
 
