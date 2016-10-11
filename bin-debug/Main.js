@@ -262,7 +262,7 @@ var Main = (function (_super) {
         Pageall.addChild(icon_down);
         this.icon_Animation(icon_down, 1);
         //音乐按钮
-        var music = RES.getRes("ah_mp3");
+        var music = RES.getRes("The1_mp3");
         var musicChannel;
         var stop_time = 0;
         musicChannel = music.play(stop_time, 0); //定义音乐

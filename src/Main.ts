@@ -296,10 +296,10 @@ class Main extends egret.DisplayObjectContainer {
         this.icon_Animation(icon_down,1);
         
         //音乐按钮
-        var music:egret.Sound = RES.getRes("ah_mp3");
+        var music:egret.Sound = RES.getRes("The1_mp3");
         var musicChannel:egret.SoundChannel;
-        var stop_time:number=0;
-        musicChannel=music.play(stop_time,0);//定义音乐
+        var stop_time:number = 0;
+        musicChannel = music.play(stop_time,0);//定义音乐
         var Anim_point =AnimModes.Anim_0;//定义按钮模式
 
         var icon_music:egret.Bitmap = this.createBitmapByName("music_png",580,1080,0.5,0.5);
