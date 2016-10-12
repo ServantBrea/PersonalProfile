@@ -115,25 +115,27 @@ class Main extends egret.DisplayObjectContainer {
         Jpg7.form = Jpg6; Jpg7.next = Jpg8;
         Jpg8.form = Jpg7; Jpg8.next = Jpg1; 
 
+        var button3_0:egret.Bitmap = this.createBitmapByName("button_png",115,945,0.8,0.5);
+        Page3.addChild(button3_0);
+
         var text3_characters = this.createText(162,960,30);
         text3_characters.textFlow = <Array<egret.ITextElement>>[
-          {text: "Games Characters", style: {"textColor": 0xffffff,"size": 35}}
+          {text: "Games Characters", style: {"textColor": 0xffffff,"size": 35,"stroke":4}}
         ];
+        text3_characters.touchEnabled = true;
         Page3.addChild(text3_characters);//定义文字 
 
-        var button_roll1:egret.Bitmap = this.createBitmapByName("left_png",140,545,0.3,0.3);
-        this.changeanchor(button_roll1);
-        button_roll1.touchEnabled = true;
-        this.icon_Animation(button_roll1,2);
-        Page3.addChild(button_roll1);
+        var button3_1:egret.Bitmap = this.createBitmapByName("left_png",130,980,0.3,0.3);
+        this.changeanchor(button3_1);
+        this.icon_Animation(button3_1,2);
+        Page3.addChild(button3_1);
 
-        var button_roll2:egret.Bitmap = this.createBitmapByName("right_png",500,545,0.3,0.3);
-        this.changeanchor(button_roll2);
-        button_roll2.touchEnabled = true;
-        this.icon_Animation(button_roll2,3);
-        Page3.addChild(button_roll2);
+        var button3_2:egret.Bitmap = this.createBitmapByName("right_png",510,980,0.3,0.3);
+        this.changeanchor(button3_2);
+        this.icon_Animation(button3_2,3);
+        Page3.addChild(button3_2);
 
-        this.Roll(Jpg1,Jpg2,Jpg3,Jpg4,Jpg5,Jpg6,Jpg7,Jpg8,button_roll1,button_roll2);
+        this.Roll(Jpg1,Jpg2,Jpg3,Jpg4,Jpg5,Jpg6,Jpg7,Jpg8,text3_characters);
  
 //页面2               
         var Page2:Page = new Page();
@@ -185,7 +187,7 @@ class Main extends egret.DisplayObjectContainer {
 
         var text1_1 = this.createText(1000,270,35);
         text1_1.textFlow = <Array<egret.ITextElement>>[
-          {text: "个人身份", style: {"textColor": 0x0000ff,"size": 35}}
+          {text: "个人身份", style: {"textColor": 0x0000ff}}
         , {text:"\n"}
         , {text: "北京工业大学信息学部", style: {"textColor": 0xffffff, "size": 30}}
         , {text:"\n"}
@@ -203,7 +205,7 @@ class Main extends egret.DisplayObjectContainer {
         
         var text1_2 = this.createText(1000,455,35);
         text1_2.textFlow = <Array<egret.ITextElement>>[
-          {text: "联系信息", style: {"textColor": 0x0000ff,"size": 35}}
+          {text: "联系信息", style: {"textColor": 0x0000ff}}
         , {text:"\n"}
         , {text: "手机：13687886372", style: {"textColor": 0xffffff, "size": 30}}
         , {text:"\n"}
@@ -223,7 +225,7 @@ class Main extends egret.DisplayObjectContainer {
         
         var text1_3 = this.createText(1000,660,35);
         text1_3.textFlow = <Array<egret.ITextElement>>[
-          {text: "个人爱好", style: {"textColor": 0x0000ff,"size": 35}}
+          {text: "个人爱好", style: {"textColor": 0x0000ff}}
         , {text:"\n"}
         , {text: "主要：大型单机游戏", style: {"textColor": 0xffffff, "size": 30}}
         , {text:"\n"}
@@ -243,7 +245,7 @@ class Main extends egret.DisplayObjectContainer {
         
         var text1_4 = this.createText(1000,865,35);
         text1_4.textFlow = <Array<egret.ITextElement>>[
-          {text: "最近正忙", style: {"textColor": 0x0000ff,"size": 35}}
+          {text: "最近正忙", style: {"textColor": 0x0000ff}}
         , {text:"\n"}
         , {text: "The Witcher 3,The last of us", style: {"textColor": 0xffffff, "size": 30}}
         , {text:"\n"}
@@ -295,25 +297,24 @@ class Main extends egret.DisplayObjectContainer {
         Pageall.addChild(icon_down);
         this.icon_Animation(icon_down,1);
         
-        //音乐按钮
         var music:egret.Sound = RES.getRes("The1_mp3");
         var musicChannel:egret.SoundChannel;
         var stop_time:number = 0;
         musicChannel = music.play(stop_time,0);//定义音乐
-        var Anim_point = AnimModes.Anim_0;//定义按钮模式
+        var music_mode = AnimModes.Anim_0;//定义按钮模式
 
         var icon_music:egret.Bitmap = this.createBitmapByName("music_png",580,1080,0.5,0.5);
         Pageall.addChild(icon_music);
         this.changeanchor(icon_music);
         icon_music.touchEnabled = true;
 
-        icon_music.addEventListener(egret.TouchEvent.TOUCH_TAP, changeAnim, this);
+        icon_music.addEventListener(egret.TouchEvent.TOUCH_TAP, changemode, this);
         icon_music.addEventListener(egret.TouchEvent.ENTER_FRAME, if_rotation, this);         
 
 //各种事件/CreateGameScene内函数     
-        function changeAnim(e: egret.TouchEvent): void {
-              Anim_point = (Anim_point + 1 ) % 2;
-              switch (Anim_point) {
+        function changemode(e: egret.TouchEvent): void {
+              music_mode = (music_mode + 1 ) % 2;
+              switch (music_mode) {
                   case AnimModes.Anim_0 : 
                         musicChannel = music.play(stop_time,0);
                         break;
@@ -326,7 +327,7 @@ class Main extends egret.DisplayObjectContainer {
         }//改变按钮和音乐播放模式
 
         function if_rotation(e: egret.TouchEvent):void {
-            switch (Anim_point) {
+            switch (music_mode) {
                case AnimModes.Anim_0 : icon_music.rotation += Main.STEP_ROT;
                     break;
                case AnimModes.Anim_1 : ;
@@ -335,7 +336,7 @@ class Main extends egret.DisplayObjectContainer {
         }//是否旋转
 
         function if_playmusic(e: egret.TouchEvent):void {
-            switch (Anim_point) {
+            switch (music_mode) {
                case AnimModes.Anim_0 : music.play();
                     break;
                case AnimModes.Anim_1 : music.close();
@@ -398,7 +399,7 @@ class Main extends egret.DisplayObjectContainer {
     }//改变锚点
 
     private Roll(p1:jpglist,p2:jpglist,p3:jpglist,p4:jpglist,p5:jpglist,p6:jpglist,p7:jpglist,p8:jpglist,
-                 b1:egret.Bitmap,b2:egret.Bitmap){
+                 button:egret.TextField){
         var po1 = this.makepoint(320,568);
         var po2_1 = this.makepoint(234,568);
         var po2_2 = this.makepoint(406,568);
@@ -413,17 +414,36 @@ class Main extends egret.DisplayObjectContainer {
         this.set(p4,po2_1,0.7,2);
         this.set(p6,po2_2,0.7,2);
         this.set(p5,po1,0.6,1);
-        /*
-        var timemode = 0;
-        var timer:egret.Timer = new egret.Timer(1000,0);//注册事件侦听器
-        timer.addEventListener(egret.TimerEvent.TIMER,gorollleft,this);
-        timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE,gorollright,this);
-        timer.start();
-        */
-        b1.addEventListener(egret.TouchEvent.TOUCH_TAP,gorollleft,this);
-        b2.addEventListener(egret.TouchEvent.TOUCH_TAP,gorollright,this);
         
-        function gorollleft(/*e: egret.TouchEvent*/):void {
+        var timer_mode = AnimModes.Anim_0;//定义按钮模式
+        var timer0:egret.Timer = new egret.Timer(1500,0);//注册事件侦听器0
+        timer0.addEventListener(egret.TimerEvent.TIMER,gorollleft,this);
+        timer0.addEventListener(egret.TimerEvent.TIMER_COMPLETE,gorollleft,this);
+        timer0.start();
+        
+        button.addEventListener(egret.TouchEvent.TOUCH_TAP,goroll,this);
+
+        function goroll(e: egret.TouchEvent):void {
+            timer_mode = (timer_mode + 1 ) % 2;
+              switch (timer_mode) {
+                  case AnimModes.Anim_0 : 
+                        timer0.removeEventListener(egret.TimerEvent.TIMER,gorollright,this);
+                        timer0.removeEventListener(egret.TimerEvent.TIMER_COMPLETE,gorollright,this);
+
+                        timer0.addEventListener(egret.TimerEvent.TIMER,gorollleft,this);
+                        timer0.addEventListener(egret.TimerEvent.TIMER_COMPLETE,gorollleft,this);
+                        break;
+                  case AnimModes.Anim_1 :
+                        timer0.removeEventListener(egret.TimerEvent.TIMER,gorollleft,this);
+                        timer0.removeEventListener(egret.TimerEvent.TIMER_COMPLETE,gorollleft,this);
+
+                        timer0.addEventListener(egret.TimerEvent.TIMER,gorollright,this);
+                        timer0.addEventListener(egret.TimerEvent.TIMER_COMPLETE,gorollright,this);
+                        break;
+            }     
+        }
+        
+        function gorollleft(e: egret.TouchEvent):void {
             egret.Tween.get(p8.jpg).to({x:po1.x,y:po1.y,scaleX:0.7*1,scaleY:0.7*1},300,egret.Ease.sineIn);
             p8.jpg.parent.setChildIndex(p8.jpg,5);
 
@@ -458,7 +478,7 @@ class Main extends egret.DisplayObjectContainer {
             p8 = p8.form;       
         }
 
-        function gorollright(/*e: egret.TouchEvent*/):void {
+        function gorollright(e: egret.TouchEvent):void {
             egret.Tween.get(p2.jpg).to({x:po1.x,y:po1.y,scaleX:0.7*1,scaleY:0.7*1},300,egret.Ease.sineIn);
             p2.jpg.parent.setChildIndex(p2.jpg,5);
 
@@ -594,6 +614,8 @@ class Main extends egret.DisplayObjectContainer {
         nomalText.x = x;
         nomalText.y = y;
         nomalText.size = s; 
+        nomalText.strokeColor = 0x000000;
+        nomalText.stroke = 2;
         nomalText.cacheAsBitmap = true;
         return nomalText;
     }//格式化生成文字（具有相同特点）

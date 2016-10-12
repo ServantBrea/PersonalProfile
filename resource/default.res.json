@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "egret_icon_png,description_json,sce_jpg,umbra_png,music_png,sce1_jpg,sce2_jpg,ah_mp3,witcher_png,codmw_png,teos_png,g1_jpg,g3_jpg,g2_jpg,g4_jpg,g5_jpg,g6_jpg,001_jpg,002_jpg,003_jpg,004_jpg,005_jpg,006_jpg,007_jpg,008_jpg,up_png,down_png,right_png,left_png,ah2_mp3,The_mp3,The1_mp3",
+			"keys": "egret_icon_png,description_json,sce_jpg,umbra_png,music_png,sce1_jpg,sce2_jpg,ah_mp3,witcher_png,codmw_png,teos_png,g1_jpg,g3_jpg,g2_jpg,g4_jpg,g5_jpg,g6_jpg,001_jpg,002_jpg,003_jpg,004_jpg,005_jpg,006_jpg,007_jpg,008_jpg,up_png,down_png,right_png,left_png,ah2_mp3,The_mp3,The1_mp3,button_png",
 			"name": "preload"
 		}
 	],
@@ -165,6 +165,11 @@
 			"name": "The1_mp3",
 			"type": "sound",
 			"url": "assets/The1.mp3"
+		},
+		{
+			"name": "button_png",
+			"type": "image",
+			"url": "assets/button.png"
 		}
 	]
 }
